@@ -1,3 +1,5 @@
+FORK: to change project structure to include the compiled engine code
+
 ## Empirical Dynamic Modeling (EDM)
 ---
 This package provides a Python/Pandas DataFrame interface to the [cppEDM](https://github.com/SugiharaLab/cppEDM) library for [EDM analysis](http://deepeco.ucsd.edu/nonlinear-dynamics-research/edm/).  [Documentation](https://github.com/SugiharaLab/pyEDM/blob/master/doc/pyEDM.pdf) is available at [pyEDM](https://github.com/SugiharaLab/pyEDM).

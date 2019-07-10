@@ -1,0 +1,16 @@
+matrix:
+  include:
+    - language: c++
+      compiler: gcc
+      before_script:
+      script:
+        - make -C cppEDM/src
+    - language: python
+       python:
+        - '3.5'
+      script:
+        - pip install .
+
+notifications:
+  email:
+    - cos008@ucsd.edu
