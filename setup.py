@@ -134,6 +134,7 @@ class BuildExt( build_ext ):
     def build_extensions(self):
         ct = self.compiler.compiler_type
         opts = self.c_opts.get(ct, [])
+        opts.append('-l EDM')
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
@@ -163,7 +164,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path ], # cppEDM libEDM.a -fPIC
-        libraries    = [],          # cppEDM libEDM.a -fPIC
+        libraries    = ['EDM'],          # cppEDM libEDM.a -fPIC
     ),
 ]
 
