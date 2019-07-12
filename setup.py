@@ -58,7 +58,6 @@ else: # assume unix
 #check that there is a non-hidden file in the lib dir, since building with msvc
 #idk if the lib name is always gonna be the same, get non hidden file in lib
 lib_files = [f for f in os.listdir(EDM_Lib_Path) if not f.startswith('.')]
-      
 
 if len( lib_files ) == 0:
     raise Exception( "Error: " + os.path.join( EDM_Lib_Path, cppLibName ) +
@@ -164,7 +163,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path ], # cppEDM libEDM.a -fPIC
-        libraries    = ['EDM'],          # cppEDM libEDM.a -fPIC
+        libraries    = [],          # cppEDM libEDM.a -fPIC
     ),
 ]
 
