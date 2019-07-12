@@ -11,3 +11,4 @@ strategy:
 
 steps:
     - script: make -C cppEDM/src
+    - script: pip install . --user
