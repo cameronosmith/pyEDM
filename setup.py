@@ -63,7 +63,7 @@ lib_files = [f for f in os.listdir(EDM_Lib_Path) if not f.startswith('.')]
 if len( lib_files ) == 0:
     raise Exception( "Error: " + os.path.join( EDM_Lib_Path, cppLibName ) +
                      " must exist.  Build cppEDM. " )
-else
+else:
     cppLibName = lib_files[0]
               
 # Transfer the README.md to the package decsription
