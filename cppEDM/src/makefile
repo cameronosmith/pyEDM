@@ -3,7 +3,7 @@ CC  = g++
 OBJ = Common.o AuxFunc.o Parameter.o Embed.o Interface.o Neighbors.o\
 	Simplex.o Eval.o CCM.o Multiview.o SMap.o 
 
-LIB = libEDM.a
+LIB = EDM.lib#libEDM.a
 
 CFLAGS = -std=c++11 -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD -O3 -fPIC\
 	-I ../../src # -g -DDEBUG -DDEBUG_ALL
