@@ -12,6 +12,7 @@ LFLAGS = -L./ -lstdc++ -lEDM -lpthread # -llapacke -llapack -lblas
 all:	$(LIB)
 	ar -rcs $(LIB) $(OBJ)
 	cp $(LIB) ../lib/
+	cp $(LIB) ../../src/bindings
 
 clean:
 	rm -f $(OBJ) $(LIB)

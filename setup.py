@@ -162,8 +162,8 @@ Extension_modules = [
         ],
         
         language     = 'c++',
-        library_dirs = [ EDM_Lib_Path ], # cppEDM libEDM.a -fPIC
-        libraries    = [],          # cppEDM libEDM.a -fPIC
+        library_dirs = [ EDM_Lib_Path, "./" ], # cppEDM libEDM.a -fPIC
+        libraries    = ["EDM","EDM.lib"]],          # cppEDM libEDM.a -fPIC
     ),
 ]
 
