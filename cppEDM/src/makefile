@@ -1,7 +1,7 @@
 
-CC  = MSVC++
-OBJ = Common.obj AuxFunc.obj Parameter.obj Embed.obj Interface.obj Neighbors.obj\
-	Simplex.obj Eval.obj CCM.obj Multiview.obj SMap.obj 
+CC  = g++
+OBJ = Common.o AuxFunc.o Parameter.o Embed.o Interface.o Neighbors.o\
+	Simplex.o Eval.o CCM.o Multiview.o SMap.o 
 
 LIB = EDM.lib#libEDM.a
 
@@ -22,56 +22,56 @@ distclean:
 
 $(LIB): $(OBJ)
 
-AuxFunc.obj: AuxFunc.cc
+AuxFunc.o: AuxFunc.cc
 	$(CC) -c AuxFunc.cc $(CFLAGS)
 
-Common.obj: Common.cc
+Common.o: Common.cc
 	$(CC) -c Common.cc $(CFLAGS)
 
-Parameter.obj: Parameter.cc
+Parameter.o: Parameter.cc
 	$(CC) -c Parameter.cc $(CFLAGS)
 
-Embed.obj: Embed.cc
+Embed.o: Embed.cc
 	$(CC) -c Embed.cc $(CFLAGS)
 
-Interface.obj: Interface.cc
+Interface.o: Interface.cc
 	$(CC) -c Interface.cc $(CFLAGS)
 
-Neighbors.obj: Neighbors.cc
+Neighbors.o: Neighbors.cc
 	$(CC) -c Neighbors.cc $(CFLAGS)
 
-Simplex.obj: Simplex.cc
+Simplex.o: Simplex.cc
 	$(CC) -c Simplex.cc $(CFLAGS)
 
-Eval.obj: Eval.cc
+Eval.o: Eval.cc
 	$(CC) -c Eval.cc $(CFLAGS)
 
-CCM.obj: CCM.cc
+CCM.o: CCM.cc
 	$(CC) -c CCM.cc $(CFLAGS)
 
-Multiview.obj: Multiview.cc
+Multiview.o: Multiview.cc
 	$(CC) -c Multiview.cc $(CFLAGS)
 
-SMap.obj: SMap.cc
+SMap.o: SMap.cc
 	$(CC) -c SMap.cc $(CFLAGS)
 
-SRCS = `echo ${OBJ} | sed -e 's/.obj /.cc /g'`
+SRCS = `echo ${OBJ} | sed -e 's/.o /.cc /g'`
 depend:
 	@echo ${SRCS}
 	makedepend -Y $(SRCS)
 # DO NOT DELETE
 
-Common.obj: Common.h DataFrame.h
-AuxFunc.obj: AuxFunc.h Common.h DataFrame.h Neighbors.h Parameter.h Version.h
-AuxFunc.obj: Embed.h
-Parameter.obj: Parameter.h Common.h DataFrame.h Version.h
-Embed.obj: Embed.h Common.h DataFrame.h Parameter.h Version.h
-Interface.obj: Common.h DataFrame.h
-Neighbors.obj: Neighbors.h Common.h DataFrame.h Parameter.h Version.h
-Simplex.obj: Common.h DataFrame.h Parameter.h Version.h Neighbors.h Embed.h
-Simplex.obj: AuxFunc.h
-Eval.obj: Common.h DataFrame.h
-CCM.obj: Common.h DataFrame.h Embed.h Parameter.h Version.h AuxFunc.h
-CCM.obj: Neighbors.h
-Multiview.obj: Common.h DataFrame.h AuxFunc.h Neighbors.h Parameter.h Version.h
-Multiview.obj: Embed.h
+Common.o: Common.h DataFrame.h
+AuxFunc.o: AuxFunc.h Common.h DataFrame.h Neighbors.h Parameter.h Version.h
+AuxFunc.o: Embed.h
+Parameter.o: Parameter.h Common.h DataFrame.h Version.h
+Embed.o: Embed.h Common.h DataFrame.h Parameter.h Version.h
+Interface.o: Common.h DataFrame.h
+Neighbors.o: Neighbors.h Common.h DataFrame.h Parameter.h Version.h
+Simplex.o: Common.h DataFrame.h Parameter.h Version.h Neighbors.h Embed.h
+Simplex.o: AuxFunc.h
+Eval.o: Common.h DataFrame.h
+CCM.o: Common.h DataFrame.h Embed.h Parameter.h Version.h AuxFunc.h
+CCM.o: Neighbors.h
+Multiview.o: Common.h DataFrame.h AuxFunc.h Neighbors.h Parameter.h Version.h
+Multiview.o: Embed.h
