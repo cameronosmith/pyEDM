@@ -27,7 +27,7 @@ DateTimeUtil.obj: DateTimeUtil.cc
 	$(CC) /c DateTimeUtil.cc $(CFLAGS)
 
 Common.obj: Common.cc
-	$(CC) /c Common.cc 
+	$(CC) Common.cc 
 
 Parameter.obj: Parameter.cc
 	$(CC) /c Parameter.cc $(CFLAGS)
