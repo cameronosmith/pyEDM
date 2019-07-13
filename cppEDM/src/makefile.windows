@@ -1,4 +1,4 @@
-CC  = cl
+CC  = g++
 OBJ = Common.obj AuxFunc.obj DateTimeUtil.o Parameter.obj Embed.obj\
 	Interface.obj Neighbors.obj Simplex.obj Eval.obj CCM.obj\
 	Multiview.obj SMap.obj 
@@ -27,7 +27,7 @@ DateTimeUtil.obj: DateTimeUtil.cc
 	$(CC) /c DateTimeUtil.cc $(CFLAGS)
 
 Common.obj: Common.cc
-	$(CC) /c Common.cc #$(CFLAGS)
+	$(CC) /c Common.cc 
 
 Parameter.obj: Parameter.cc
 	$(CC) /c Parameter.cc $(CFLAGS)
