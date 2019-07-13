@@ -189,7 +189,7 @@ setup(
     install_requires = ['pybind11>=2.2', 'pandas>=0.20.3', 'matplotlib>=2.2'],
     python_requires  = '>=3',
     cmdclass         = { 'build_ext' : BuildExt }, # Command/class to build .so
-    zip_safe         = False,
+    #zip_safe         = False,
 )
 #----------------------------------------------------------------------
 # [1] This test_suite doesn't seem terribly useful here in that its use
