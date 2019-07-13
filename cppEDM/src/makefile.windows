@@ -6,7 +6,7 @@ OBJ = Common.obj AuxFunc.obj DateTimeUtil.o Parameter.obj Embed.obj\
 LIB = EDM.lib
 
 # Assume Eigen\ is at the same level as pyEDM (..\..\..)
-CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD  /std:c++14 #/EHsc /MT  -DDEBUG -DDEBUG_ALL
+CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD  -std=c++11 #/EHsc /MT  -DDEBUG -DDEBUG_ALL
 
 all:	$(LIB)
 	lib /OUT:$(LIB) $(OBJ)
