@@ -11,4 +11,5 @@ strategy:
 
 steps:
     - script: make -C cppEDM/src 
+    - script: pip install pybind11
     - script: python setup.py build --compiler=msvc
