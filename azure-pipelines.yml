@@ -10,5 +10,5 @@ strategy:
         python.version: '3.6'
 
 steps:
-    - script: make -C cppEDM/src
+    - script: make -C cppEDM/src -f makefile.windows
     - script: pip install . --user
