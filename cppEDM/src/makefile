@@ -1,5 +1,5 @@
 
-CC  = g++
+CC  = MSVC++
 OBJ = Common.obj AuxFunc.obj Parameter.obj Embed.obj Interface.obj Neighbors.obj\
 	Simplex.obj Eval.obj CCM.obj Multiview.obj SMap.obj 
 
