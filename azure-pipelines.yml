@@ -11,4 +11,4 @@ strategy:
 
 steps:
     - script: make -C cppEDM/src 
-    - script: CC=gcc python setup.py build
+    - script: python setup.py build --compiler=unix
