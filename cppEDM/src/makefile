@@ -25,7 +25,7 @@ $(LIB): $(OBJ)
 AuxFunc.o: AuxFunc.cc
 	$(CC) -c AuxFunc.cc $(CFLAGS)
 
-Common.o: Common.cc
+Common.obj: Common.cc
 	$(CC) -c Common.cc $(CFLAGS)
 
 Parameter.o: Parameter.cc
