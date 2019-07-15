@@ -124,7 +124,7 @@ class BuildExt( build_ext ):
     """A custom build extension for adding compiler-specific options."""
     
     c_opts = {
-        'msvc': ['/EHsc'],
+        'msvc': ['/EHsc EDM.lib'],
         'unix': [],
     }
 
@@ -162,7 +162,7 @@ Extension_modules = [
         ],
         
         language     = 'c++',
-        library_dirs = [ EDM_Lib_Path, "./" ], # cppEDM libEDM.a -fPIC
+        library_dirs = [ EDM_Lib_Path ], # cppEDM libEDM.a -fPIC
         libraries    = ["EDM"],          # cppEDM libEDM.a -fPIC
     ),
 ]
