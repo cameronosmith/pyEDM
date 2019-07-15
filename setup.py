@@ -51,7 +51,7 @@ platform = sys.platform
 if platform == 'darwin' or platform == 'linux':
     cppLibName = 'libEDM.a'
 elif sys.platform == 'win32':
-    cppLibName = 'EDM.lib'
+    cppLibName = 'libEDM.a'
 else: # assume unix
     cppLibName = 'libEDM.a'
 
