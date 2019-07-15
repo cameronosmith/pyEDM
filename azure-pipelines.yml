@@ -10,6 +10,6 @@ strategy:
         python.version: '3.6'
 
 steps:
-    - script: make -C cppEDM/src -f makefile.windows
+    - script: make -C cppEDM/src 
     - script: pip install pybind11
-    - script: python setup.py build --compiler=msvc
+    - script: python setup.py build
