@@ -12,4 +12,5 @@ strategy:
 steps:
     - script: make -C cppEDM/src 
     - script: pip install pybind11
-    - script: python setup.py build
+    - script: python setup.py build_ext --compiler=unix install
+    - script: python setup.py build_ext --compiler=mingw32 install
