@@ -1,4 +1,4 @@
-CC  = C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x64\cl.exe
+CC  = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x64\cl.exe"
 OBJ = Common.obj AuxFunc.obj DateTimeUtil.o Parameter.obj Embed.obj\
 	Interface.obj Neighbors.obj Simplex.obj Eval.obj CCM.obj\
 	Multiview.obj SMap.obj 
