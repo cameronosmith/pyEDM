@@ -6,7 +6,11 @@
 
 namespace py = pybind11;
 
+extern "C" {
+
 #include "Common.h"  // cpp DataFrame
+
+}
 
 // There are three data frame representations:
 //   1) C++ DataFrame class defined in cppEDM DataFrame.h

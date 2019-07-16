@@ -3,6 +3,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+extern "C" {
+
 #include "PyBind.h"
 
 #include "DataFrame.cpp"
@@ -15,6 +17,8 @@
 #include "EmbedDim.cpp"
 #include "PredictInterval.cpp"
 #include "PredictNL.cpp"
+
+}
 
 //-------------------------------------------------------------------------
 // PYBIND11_MODULE macro creates entry points invoked when the Python
