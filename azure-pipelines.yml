@@ -1,5 +1,5 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python 
 - task: VSBuild@1
-    inputs:
-        solution: '**\*.sln'
-        msbuildArgs: 'cl cppEDM/src/Common.cc'
+  inputs:
+    solution: '**\*.sln'
+    msbuildArgs: 'cl cppEDM/src/Common.cc'
