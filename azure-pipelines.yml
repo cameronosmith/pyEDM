@@ -9,10 +9,10 @@ strategy:
       Python27:
         python.version: '3.6'
 
-- task: VSBuild@1
+task: VSBuild@1
     inputs:
         solution: '**\*.sln'
-    msbuildArgs: 'cl cppEDM/src/Common.cc'
+        msbuildArgs: 'cl cppEDM/src/Common.cc'
 
 steps:
     - powershell: make -C cppEDM/src -f makefile.windows
