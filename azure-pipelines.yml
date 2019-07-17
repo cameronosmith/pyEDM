@@ -1,6 +1,5 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python 
-- task: VSBuild@1
-    inputs:
+task: VSBuild@1
     solution: '**\*.sln'
 pool:
   #vmImage: 'ubuntu-16.04' # other options: 'macOS-10.13', 'vs2017-win2016'
