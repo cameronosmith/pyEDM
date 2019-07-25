@@ -60,8 +60,6 @@ if not os.path.isfile( os.path.join( EDM_Lib_Path, cppLibName ) ) :
                      " must exist.  Build cppEDM. " )
               
 # Transfer the README.md to the package decsription
-with open(os.path.join(tmpInstallPath, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
     
 #----------------------------------------------------------------------
 #
