@@ -170,7 +170,6 @@ setup(
     author_email     = 'Sugihara.Lab@gmail.com',
     url              = 'https://github.com/SugiharaLab/pyEDM',
     description      = 'Python wrapper for cppEDM using pybind11',
-    long_description = long_description,
     long_description_content_type = 'text/markdown',
     license          = 'Copyright 2019 The Regents of the University ' +\
                        'of California.',

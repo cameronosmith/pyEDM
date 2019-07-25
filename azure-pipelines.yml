@@ -12,4 +12,4 @@ strategy:
 steps:
     - script: make -C cppEDM/src -f makefile.unix
     - script: pip install pybind11
-    - script: python setup.py build_ext 
+    - script: python setup.py build
