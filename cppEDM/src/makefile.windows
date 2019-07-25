@@ -1,15 +1,16 @@
-CC  = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x64\cl.exe"
-OBJ = Common.obj AuxFunc.obj DateTimeUtil.o Parameter.obj Embed.obj\
+
+CC  = cl
+OBJ = Common.obj AuxFunc.obj DateTimeUtil.obj Parameter.obj Embed.obj\
 	Interface.obj Neighbors.obj Simplex.obj Eval.obj CCM.obj\
 	Multiview.obj SMap.obj 
 
 LIB = EDM.lib
 
 # Assume Eigen\ is at the same level as pyEDM (..\..\..)
-CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD  /EHsc /MT  -DDEBUG -DDEBUG_ALL
+CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD  /I.\..\..\src /EHsc /MD # -DDEBUG -DDEBUG_ALL
 
 all:	$(LIB)
-	lib /OUT:$(LIB) $(OBJ)
+	lib  /NODEFAULTLIB:LIBCMT /NODEFAULTLIB:library /OUT:$(LIB) $(OBJ)
 	copy $(LIB) ..\lib
 
 clean:
@@ -27,7 +28,7 @@ DateTimeUtil.obj: DateTimeUtil.cc
 	$(CC) /c DateTimeUtil.cc $(CFLAGS)
 
 Common.obj: Common.cc
-	$(CC) Common.cc 
+	$(CC) /c Common.cc $(CFLAGS)
 
 Parameter.obj: Parameter.cc
 	$(CC) /c Parameter.cc $(CFLAGS)
