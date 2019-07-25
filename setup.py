@@ -54,16 +54,10 @@ elif sys.platform == 'win32':
     cppLibName = 'EDM.lib'
 else: # assume unix
     cppLibName = 'libEDM.a'
-
-#check that there is a non-hidden file in the lib dir, since building with msvc
-#idk if the lib name is always gonna be the same, get non hidden file in lib
-lib_files = [f for f in os.listdir(EDM_Lib_Path) if not f.startswith('.')]
-
-if len( lib_files ) == 0:
+      
+if not os.path.isfile( os.path.join( EDM_Lib_Path, cppLibName ) ) :
     raise Exception( "Error: " + os.path.join( EDM_Lib_Path, cppLibName ) +
                      " must exist.  Build cppEDM. " )
-else:
-    cppLibName = lib_files[0]
               
 # Transfer the README.md to the package decsription
 with open(os.path.join(tmpInstallPath, 'README.md'), encoding='utf-8') as f:
@@ -163,7 +157,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path ], # cppEDM libEDM.a -fPIC
-        libraries    = ["EDM"],          # cppEDM libEDM.a -fPIC
+        libraries    = ['EDM'],          # cppEDM libEDM.a -fPIC
     ),
 ]
 

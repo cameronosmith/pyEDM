@@ -1,4 +1,5 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python 
+<<<<<<< HEAD
 pool:
   #vmImage: 'ubuntu-16.04' # other options: 'macOS-10.13', 'vs2017-win2016'
   vmImage:  'macOS-10.13' #, 'vs2017-win2016'
@@ -13,3 +14,9 @@ steps:
     - script: make -C cppEDM/src -f makefile.unix
     - script: pip install pybind11
     - script: python setup.py build_ext 
+=======
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    msbuildArgs: 'cl cppEDM/src/Common.cc'
+>>>>>>> fa5cd103e4a06f4938de87ed7419d6898b0cd0b1
