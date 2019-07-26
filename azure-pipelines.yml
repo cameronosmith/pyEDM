@@ -10,7 +10,11 @@ strategy:
             python.version: '3.6'
 
 steps:
-    - powershell: dir 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin'
-    - script: make -C cppEDM/src -f makefile.windows
+    - task: BatchScript@1
+        inputs:
+            filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat'
+            modifyEnvironment: True 
+    #- powershell: dir 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin'
+    #- script: make -C cppEDM/src -f makefile.windows
     #- script: pip install pybind11
     #- script: python setup.py build
