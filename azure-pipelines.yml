@@ -15,5 +15,5 @@ steps:
     filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat'
     modifyEnvironment: True 
 - script: make -C cppEDM/src -f makefile.windows
-#- script: pip install pybind11
-#- script: python setup.py build
+- script: pip install pybind11
+- script: python setup.py build
