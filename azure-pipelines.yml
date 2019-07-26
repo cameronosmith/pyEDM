@@ -4,16 +4,16 @@ pool:
   #vmImage:  'macOS-10.13' #, 'vs2017-win2016'
   vmImage:   'vs2017-win2016'
 
-strategy:
-    matrix:
-        Python27:
-            python.version: '3.6'
+#strategy:
+#    matrix:
+#        Python27:
+#            python.version: '3.6'
 
-#steps:
-task: BatchScript@1
-    inputs:
-        filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat'
-        modifyEnvironment: True 
+steps:
+- task: BatchScript@1
+  inputs:
+    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat'
+      modifyEnvironment: True 
     #- powershell: dir 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin'
     #- script: make -C cppEDM/src -f makefile.windows
     #- script: pip install pybind11
