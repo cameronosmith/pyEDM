@@ -12,7 +12,8 @@ pool:
 steps:
 - task: BatchScript@1
   inputs:
-    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat'
+    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+    arguments: 'amd64'
     modifyEnvironment: True 
 - script: make -C cppEDM/src -f makefile.windows
 - script: pip install pybind11
