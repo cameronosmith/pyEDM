@@ -35,7 +35,3 @@ steps:
 - script: python setup.py build
 - publish: $(System.DefaultWorkingDirectory)/build
   artifact: build
-
-pool:
-  vmImage: 'ubuntu-16.04' 
-  vmImage: 'macOS-10.13' 
