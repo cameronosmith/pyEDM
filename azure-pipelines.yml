@@ -19,4 +19,4 @@ steps:
 - script: pip install pybind11
 - script: python setup.py build
 - publish: $(System.DefaultWorkingDirectory)/bin/WebApp
-    artifact: WebApp
+  artifact: WebApp
