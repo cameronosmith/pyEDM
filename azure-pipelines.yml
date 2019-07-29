@@ -1,29 +1,41 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python 
+pool:
+  vmImage: 'ubuntu-16.04' 
+  vmImage: 'macOS-10.13' 
+  vmImage: 'vs2017-win2016'
 
 strategy:
     matrix:
         Python27:
             python.version: '3.6'
 
-vmImage:   'vs2017-win2016'
 steps:
+#only setup the visual studio environment if on windowz
 - task: BatchScript@1
   inputs:
     filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
     arguments: 'amd64'
     modifyEnvironment: True 
-#- script: make -C cppEDM/src -f makefile.windows
-#- script: pip install pybind11
-#- script: python setup.py build
+    condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    displayName: setup visual studio env on windows
+
+#build cppEDM with respective makefile
+- script: make -C cppEDM/src -f makefile.windows
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: building cppEDM on windows
+- script: make -C cppEDM/src -f makefile.unix
+  condition: eq( variables['Agent.OS'], 'Darwin' )
+  displayName: building cppEDM on macOS
+- script: make -C cppEDM/src -f makefile.unix
+  condition: eq( variables['Agent.OS'], 'Linux' )
+  displayName: building cppEDM on linux
+
+#build the package and download
+- script: pip install pybind11
+- script: python setup.py build
 - publish: $(System.DefaultWorkingDirectory)/build
   artifact: build
 
 pool:
   vmImage: 'ubuntu-16.04' 
-  vmImage:  'macOS-10.13' 
-strategy:
-    matrix:
-        Python27:
-            python.version: '3.6'
-
-
+  vmImage: 'macOS-10.13' 
