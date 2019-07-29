@@ -21,8 +21,8 @@ steps:
     filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
     arguments: 'amd64'
     modifyEnvironment: True 
-    condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    displayName: setup visual studio env on windows
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: setup visual studio env on windows
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
