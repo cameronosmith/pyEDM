@@ -38,5 +38,13 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: python setup.py build
+
 - publish: $(System.DefaultWorkingDirectory)/build
-  artifact: build
+  condition: eq( variables['Agent.OS'], 'Darwin' )
+  artifact: build_macOS
+- publish: $(System.DefaultWorkingDirectory)/build
+  condition: eq( variables['Agent.OS'], 'Linux' )
+  artifact: build_linux
+- publish: $(System.DefaultWorkingDirectory)/build
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  artifact: build_windows
