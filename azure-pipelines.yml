@@ -18,3 +18,5 @@ steps:
 - script: make -C cppEDM/src -f makefile.windows
 - script: pip install pybind11
 - script: python setup.py build
+- publish: $(System.DefaultWorkingDirectory)/bin/WebApp
+    artifact: WebApp
