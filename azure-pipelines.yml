@@ -1,12 +1,24 @@
-parameters:
-  pythonVersions: ["3.7", "3.6", "3.5", "2.7"],
-  operatingSystems: ['ubuntu-16.04','macos-10.13','vs2017-win2016']
 
 strategy:
   matrix:
-     ${{ each py in parameters.pythonVersions }}:
-       ${{ each os in parameters.operatingSystems }}:
-         ${{ format('{0}{1}', py, os) }}:
+    Linux_Python36:
+      VM_IMAGE: 'ubuntu-16.04'
+      PYTHON_VERSION: '3.6'
+    Linux_Python37:
+      VM_IMAGE: 'ubuntu-16.04'
+      PYTHON_VERSION: '3.7'
+    Windows_Python36:
+      VM_IMAGE: 'vs2017-win2016'
+      PYTHON_VERSION: '3.6'
+    Windows_Python37:
+      VM_IMAGE: 'vs2017-win2016'
+      PYTHON_VERSION: '3.7'
+    Mac_Python36:
+      VM_IMAGE: 'macos-10.13'
+      PYTHON_VERSION: '3.6'
+    Mac_Python37:
+      VM_IMAGE: 'macos-10.13'
+      PYTHON_VERSION: '3.7'
 
 pool:
   vmImage: $(imageName)
