@@ -1,51 +1,10 @@
 
 strategy:
   matrix:
-    Linux_2.7:
-      vmImage: 'ubuntu-16.04'
-      build_name: 'Linux_ubuntu-16.04_EDM'
-    Linux_3.4:
-      vmImage: 'ubuntu-16.04'
-      build_name: 'Linux_ubuntu-16.04_EDM'
-    Linux_3.5:
-      vmImage: 'ubuntu-16.04'
-      build_name: 'Linux_ubuntu-16.04_EDM'
-    Linux_3.6:
-      vmImage: 'ubuntu-16.04'
-      build_name: 'Linux_ubuntu-16.04_EDM'
-    Linux_3.7:
-      vmImage: 'ubuntu-16.04'
-      build_name: 'Linux_ubuntu-16.04_EDM'
-    Windows_2.7:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_vs2017-win2016_EDM'
-    Windows_3.4:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_vs2017-win2016_EDM'
-    Windows_3.5:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_vs2017-win2016_EDM'
-    Windows_3.6:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_vs2017-win2016_EDM'
     Windows_3.7:
       vmImage: 'vs2017-win2016'
       build_name: 'Windows_vs2017-win2016_EDM'
-    Mac_2.7:
-      vmImage: 'macos-10.13'
-      build_name: 'Mac_macos-10.13_EDM'
-    Mac_3.4:
-      vmImage: 'macos-10.13'
-      build_name: 'Mac_macos-10.13_EDM'
-    Mac_3.5:
-      vmImage: 'macos-10.13'
-      build_name: 'Mac_macos-10.13_EDM'
-    Mac_3.6:
-      vmImage: 'macos-10.13'
-      build_name: 'Mac_macos-10.13_EDM'
-    Mac_3.7:
-      vmImage: 'macos-10.13'
-      build_name: 'Mac_macos-10.13_EDM'
+      python.version: '3.7.4'
 pool:
   vmImage: $(vmImage)
   python.version: $(python.version)
