@@ -28,10 +28,10 @@ steps:
 - script: make -C cppEDM/src -f makefile.windows
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: building cppEDM on windows
-- script: make -C cppEDM/src -f makefile.unix
+- script: make -C cppEDM/src
   condition: eq( variables['Agent.OS'], 'Darwin' )
   displayName: building cppEDM on macOS
-- script: make -C cppEDM/src -f makefile.unix
+- script: make -C cppEDM/src 
   condition: eq( variables['Agent.OS'], 'Linux' )
   displayName: building cppEDM on linux
 

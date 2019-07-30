@@ -60,6 +60,8 @@ if not os.path.isfile( os.path.join( EDM_Lib_Path, cppLibName ) ) :
                      " must exist.  Build cppEDM. " )
               
 # Transfer the README.md to the package decsription
+with open(os.path.join(tmpInstallPath, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
     
 #----------------------------------------------------------------------
 #
@@ -170,6 +172,7 @@ setup(
     author_email     = 'Sugihara.Lab@gmail.com',
     url              = 'https://github.com/SugiharaLab/pyEDM',
     description      = 'Python wrapper for cppEDM using pybind11',
+    long_description = long_description,
     long_description_content_type = 'text/markdown',
     license          = 'Copyright 2019 The Regents of the University ' +\
                        'of California.',
