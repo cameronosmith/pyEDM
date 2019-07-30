@@ -20,6 +20,9 @@ strategy:
       vmImage: 'macos-10.13'
       python.version: '3.7'
 
+pool:
+  vmImage: $(vmImage)
+
 steps:
 #only setup the visual studio environment if on windowz
 - task: BatchScript@1
@@ -32,8 +35,8 @@ steps:
 
 #download eigen for cppEDM
 - script: git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
-- script: mv eigen_git/Eigen .
   displayName: download eigen
+- script: mv eigen_git/Eigen .
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
