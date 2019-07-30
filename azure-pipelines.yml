@@ -4,21 +4,27 @@ strategy:
     Linux_Python36:
       vmImage: 'ubuntu-16.04'
       python.version: '3.6'
+      build_name: 'Linux_Python36_EDM'
     Linux_Python37:
       vmImage: 'ubuntu-16.04'
       python.version: '3.7'
+      build_name: 'Linux_Python37_EDM'
     Windows_Python36:
       vmImage: 'vs2017-win2016'
       python.version: '3.6'
+      build_name: 'Windows_Python36_EDM'
     Windows_Python37:
       vmImage: 'vs2017-win2016'
       python.version: '3.7'
+      build_name: 'Windows_Python37_EDM'
     Mac_Python36:
       vmImage: 'macos-10.13'
       python.version: '3.6'
+      build_name: 'Mac_Python36_EDM'
     Mac_Python37:
       vmImage: 'macos-10.13'
       python.version: '3.7'
+      build_name: 'Mac_Python37_EDM'
 
 pool:
   vmImage: $(vmImage)
@@ -59,10 +65,10 @@ steps:
 
 - publish: $(System.DefaultWorkingDirectory)/build
   condition: eq( variables['Agent.OS'], 'Darwin' )
-  artifact: ${{ format('build_macOS {0}{1}', $(vmImage), $(python.version)) }}
+  artifact: $(build_name)
 - publish: $(System.DefaultWorkingDirectory)/build
   condition: eq( variables['Agent.OS'], 'Linux' )
-  artifact: build_linux
+  artifact: $(build_name)
 - publish: $(System.DefaultWorkingDirectory)/build
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  artifact: build_windows
+  artifact: $(build_name)
