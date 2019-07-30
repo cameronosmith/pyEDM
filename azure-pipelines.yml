@@ -20,9 +20,6 @@ strategy:
       VM_IMAGE: 'macos-10.13'
       PYTHON_VERSION: '3.7'
 
-pool:
-  vmImage: $(imageName)
-
 steps:
 #only setup the visual studio environment if on windowz
 - task: BatchScript@1
