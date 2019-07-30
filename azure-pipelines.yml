@@ -1,15 +1,12 @@
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python 
-    #matrix:
-    #    Python27:
-    #        python.version: '3.6'
+parameters:
+  pythonVersions: ["3.7", "3.6", "3.5", "2.7"],
+  operatingSystems: ['ubuntu-16.04','macos-10.13','vs2017-win2016']
+
 strategy:
   matrix:
-    linux:
-      imageName: 'ubuntu-16.04'
-    mac:
-      imageName: 'macos-10.13'
-    windows:
-      imageName: 'vs2017-win2016'
+     ${{ each py in parameters.pythonVersions }}:
+       ${{ each os in parameters.operatingSystems }}:
+         ${{ format('{0}{1}', py, os) }}:
 
 pool:
   vmImage: $(imageName)
