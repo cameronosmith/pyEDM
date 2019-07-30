@@ -22,6 +22,7 @@ strategy:
 
 pool:
   vmImage: $(vmImage)
+  python.version: $(python.version)
 
 steps:
 #only setup the visual studio environment if on windowz
@@ -37,6 +38,9 @@ steps:
 - script: git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   displayName: download eigen
 - script: mv eigen_git/Eigen .
+
+#print which version python using for testing
+- script: python --version
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
@@ -55,7 +59,7 @@ steps:
 
 - publish: $(System.DefaultWorkingDirectory)/build
   condition: eq( variables['Agent.OS'], 'Darwin' )
-  artifact: build_macOS
+  artifact: ${{ format('build_macOS {0}{1}', $(vmImage), $(python.version)) }}
 - publish: $(System.DefaultWorkingDirectory)/build
   condition: eq( variables['Agent.OS'], 'Linux' )
   artifact: build_linux
