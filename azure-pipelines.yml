@@ -2,23 +2,23 @@
 strategy:
   matrix:
     Linux_Python36:
-      VM_IMAGE: 'ubuntu-16.04'
-      PYTHON_VERSION: '3.6'
+      vmImage: 'ubuntu-16.04'
+      python.version: '3.6'
     Linux_Python37:
-      VM_IMAGE: 'ubuntu-16.04'
-      PYTHON_VERSION: '3.7'
+      vmImage: 'ubuntu-16.04'
+      python.version: '3.7'
     Windows_Python36:
-      VM_IMAGE: 'vs2017-win2016'
-      PYTHON_VERSION: '3.6'
+      vmImage: 'vs2017-win2016'
+      python.version: '3.6'
     Windows_Python37:
-      VM_IMAGE: 'vs2017-win2016'
-      PYTHON_VERSION: '3.7'
+      vmImage: 'vs2017-win2016'
+      python.version: '3.7'
     Mac_Python36:
-      VM_IMAGE: 'macos-10.13'
-      PYTHON_VERSION: '3.6'
+      vmImage: 'macos-10.13'
+      python.version: '3.6'
     Mac_Python37:
-      VM_IMAGE: 'macos-10.13'
-      PYTHON_VERSION: '3.7'
+      vmImage: 'macos-10.13'
+      python.version: '3.7'
 
 steps:
 #only setup the visual studio environment if on windowz
