@@ -24,6 +24,11 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
+#download eigen for cppEDM
+- script: git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
+- script: mv eigen_git/Eigen .
+  displayName: download eigen
+
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
