@@ -1,14 +1,6 @@
 
 strategy:
   matrix:
-    Windows_2.7.16:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_2.7.16_EDM'
-      python.version: '2.7.16'
-    Windows_3.4.4:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_3.4.4_EDM'
-      python.version: '3.4.4'
     Windows_3.5.4:
       vmImage: 'vs2017-win2016'
       build_name: 'Windows_3.5.4_EDM'
@@ -74,6 +66,7 @@ steps:
     modifyEnvironment: True 
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
+
 
 #download eigen for cppEDM
 - script: git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
