@@ -1,51 +1,51 @@
 
 strategy:
   matrix:
-    vs2017-win2016_2.7:
-      vmImage: 'Windows'
-      build_name: 'vs2017-win2016_Windows_EDM'
-    vs2017-win2016_3.4:
-      vmImage: 'Windows'
-      build_name: 'vs2017-win2016_Windows_EDM'
-    vs2017-win2016_3.5:
-      vmImage: 'Windows'
-      build_name: 'vs2017-win2016_Windows_EDM'
-    vs2017-win2016_3.6:
-      vmImage: 'Windows'
-      build_name: 'vs2017-win2016_Windows_EDM'
-    vs2017-win2016_3.7:
-      vmImage: 'Windows'
-      build_name: 'vs2017-win2016_Windows_EDM'
-    macos-10.13_2.7:
-      vmImage: 'MacOS'
-      build_name: 'macos-10.13_MacOS_EDM'
-    macos-10.13_3.4:
-      vmImage: 'MacOS'
-      build_name: 'macos-10.13_MacOS_EDM'
-    macos-10.13_3.5:
-      vmImage: 'MacOS'
-      build_name: 'macos-10.13_MacOS_EDM'
-    macos-10.13_3.6:
-      vmImage: 'MacOS'
-      build_name: 'macos-10.13_MacOS_EDM'
-    macos-10.13_3.7:
-      vmImage: 'MacOS'
-      build_name: 'macos-10.13_MacOS_EDM'
-    ubuntu-latest_2.7:
-      vmImage: 'Linux'
-      build_name: 'ubuntu-latest_Linux_EDM'
-    ubuntu-latest_3.4:
-      vmImage: 'Linux'
-      build_name: 'ubuntu-latest_Linux_EDM'
-    ubuntu-latest_3.5:
-      vmImage: 'Linux'
-      build_name: 'ubuntu-latest_Linux_EDM'
-    ubuntu-latest_3.6:
-      vmImage: 'Linux'
-      build_name: 'ubuntu-latest_Linux_EDM'
-    ubuntu-latest_3.7:
-      vmImage: 'Linux'
-      build_name: 'ubuntu-latest_Linux_EDM'
+    Windows_2.7:
+      vmImage: 'vs2017-win2016'
+      build_name: 'Windows_vs2017-win2016_EDM'
+    Windows_3.4:
+      vmImage: 'vs2017-win2016'
+      build_name: 'Windows_vs2017-win2016_EDM'
+    Windows_3.5:
+      vmImage: 'vs2017-win2016'
+      build_name: 'Windows_vs2017-win2016_EDM'
+    Windows_3.6:
+      vmImage: 'vs2017-win2016'
+      build_name: 'Windows_vs2017-win2016_EDM'
+    Windows_3.7:
+      vmImage: 'vs2017-win2016'
+      build_name: 'Windows_vs2017-win2016_EDM'
+    MacOS_2.7:
+      vmImage: 'macos-10.13'
+      build_name: 'MacOS_macos-10.13_EDM'
+    MacOS_3.4:
+      vmImage: 'macos-10.13'
+      build_name: 'MacOS_macos-10.13_EDM'
+    MacOS_3.5:
+      vmImage: 'macos-10.13'
+      build_name: 'MacOS_macos-10.13_EDM'
+    MacOS_3.6:
+      vmImage: 'macos-10.13'
+      build_name: 'MacOS_macos-10.13_EDM'
+    MacOS_3.7:
+      vmImage: 'macos-10.13'
+      build_name: 'MacOS_macos-10.13_EDM'
+    Linux_2.7:
+      vmImage: 'ubuntu-latest'
+      build_name: 'Linux_ubuntu-latest_EDM'
+    Linux_3.4:
+      vmImage: 'ubuntu-latest'
+      build_name: 'Linux_ubuntu-latest_EDM'
+    Linux_3.5:
+      vmImage: 'ubuntu-latest'
+      build_name: 'Linux_ubuntu-latest_EDM'
+    Linux_3.6:
+      vmImage: 'ubuntu-latest'
+      build_name: 'Linux_ubuntu-latest_EDM'
+    Linux_3.7:
+      vmImage: 'ubuntu-latest'
+      build_name: 'Linux_ubuntu-latest_EDM'
 
 pool:
   vmImage: $(vmImage)
