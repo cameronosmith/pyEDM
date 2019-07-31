@@ -1,10 +1,52 @@
 
 strategy:
   matrix:
-    Windows_3.7:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_vs2017-win2016_EDM'
-      python.version: '3.7.4'
+    vs2017-win2016_2.7:
+      vmImage: 'Windows'
+      build_name: 'vs2017-win2016_Windows_EDM'
+    vs2017-win2016_3.4:
+      vmImage: 'Windows'
+      build_name: 'vs2017-win2016_Windows_EDM'
+    vs2017-win2016_3.5:
+      vmImage: 'Windows'
+      build_name: 'vs2017-win2016_Windows_EDM'
+    vs2017-win2016_3.6:
+      vmImage: 'Windows'
+      build_name: 'vs2017-win2016_Windows_EDM'
+    vs2017-win2016_3.7:
+      vmImage: 'Windows'
+      build_name: 'vs2017-win2016_Windows_EDM'
+    macos-10.13_2.7:
+      vmImage: 'MacOS'
+      build_name: 'macos-10.13_MacOS_EDM'
+    macos-10.13_3.4:
+      vmImage: 'MacOS'
+      build_name: 'macos-10.13_MacOS_EDM'
+    macos-10.13_3.5:
+      vmImage: 'MacOS'
+      build_name: 'macos-10.13_MacOS_EDM'
+    macos-10.13_3.6:
+      vmImage: 'MacOS'
+      build_name: 'macos-10.13_MacOS_EDM'
+    macos-10.13_3.7:
+      vmImage: 'MacOS'
+      build_name: 'macos-10.13_MacOS_EDM'
+    ubuntu-latest_2.7:
+      vmImage: 'Linux'
+      build_name: 'ubuntu-latest_Linux_EDM'
+    ubuntu-latest_3.4:
+      vmImage: 'Linux'
+      build_name: 'ubuntu-latest_Linux_EDM'
+    ubuntu-latest_3.5:
+      vmImage: 'Linux'
+      build_name: 'ubuntu-latest_Linux_EDM'
+    ubuntu-latest_3.6:
+      vmImage: 'Linux'
+      build_name: 'ubuntu-latest_Linux_EDM'
+    ubuntu-latest_3.7:
+      vmImage: 'Linux'
+      build_name: 'ubuntu-latest_Linux_EDM'
+
 pool:
   vmImage: $(vmImage)
   python.version: $(python.version)
