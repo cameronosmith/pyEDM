@@ -38,7 +38,7 @@ import setuptools
 from   setuptools import setup, Extension
 from   setuptools.command.build_ext import build_ext
 
-__version__ = '0.1.3'  # Get version from cppEDM Parameter.cc ?
+__version__ = '0.1.41'  # Get version from cppEDM Parameter.cc ?
 
 # e.g. /tmp/pip-req-build-9ljrp27z/
 tmpInstallPath = os.path.dirname( os.path.abspath( __file__ ) )
@@ -54,6 +54,11 @@ elif sys.platform == 'win32':
     cppLibName = 'EDM.lib'
 else: # assume unix
     cppLibName = 'libEDM.a'
+
+print("A pyEDM binary distribution was not available for your system.\n"+
+    "If you are on a Linux machine, see build instructions at \n" +
+    "https://github.com/SugiharaLab/pyEDM. Otherwise, see supported \n"+
+    "system / Python versions at the same link. \n" )
       
 if not os.path.isfile( os.path.join( EDM_Lib_Path, cppLibName ) ) :
     raise Exception( "Error: " + os.path.join( EDM_Lib_Path, cppLibName ) +
@@ -166,7 +171,7 @@ Extension_modules = [
 #----------------------------------------------------------------------
 setup(
     # name of the *-version.dist-info directory
-    name             = 'EDM-SugiharaLab', 
+    name             = 'pyEDM', 
     version          = __version__,
     author           = 'Joseph Park & Cameron Smith',
     author_email     = 'Sugihara.Lab@gmail.com',
@@ -178,7 +183,7 @@ setup(
                        'of California.',
     packages         = setuptools.find_packages(), # Enable ./EDM Python module
     ext_modules      = Extension_modules,
-    package_data     = { 'EDM' : ['data/*.csv', 'tests/*.py'] },
+    package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py'] },
     #test_suite      = "tests", # ??? [1]
     install_requires = ['pybind11>=2.2', 'pandas>=0.20.3', 'matplotlib>=2.2'],
     python_requires  = '>=3',
