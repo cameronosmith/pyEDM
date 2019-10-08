@@ -44,7 +44,7 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: pip install wheel
-- script: python setup.py bdist_wheel
-- script: mv test.py build/lib*
-- script: python build/lib*/test.py
+- script: python setup.py install --user
+- script: python test.py
+
 
