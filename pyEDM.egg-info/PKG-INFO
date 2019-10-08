@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pyEDM
-Version: 0.1.41
+Version: 0.1.7
 Summary: Python wrapper for cppEDM using pybind11
 Home-page: https://github.com/SugiharaLab/pyEDM
 Author: Joseph Park & Cameron Smith
@@ -45,8 +45,8 @@ Description: ## Empirical Dynamic Modeling (EDM)
         ## Usage
         Example usage at the python prompt:
         ```python
-        >>> import EDM
-        >>> EDM.Examples()
+        >>> import pyEDM
+        >>> pyEDM.Examples()
         ```
         
         ---

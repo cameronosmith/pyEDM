@@ -39,6 +39,7 @@ Parameters::Parameters(
     std::string libSizes_str,
     int         sample,
     bool        random,
+    bool        replacement,
     unsigned    rseed,
     bool        noNeigh,
     bool        fwdTau
@@ -78,13 +79,14 @@ Parameters::Parameters(
     libSizes_str     ( libSizes_str ),
     subSamples       ( sample ),
     randomLib        ( random ),
+    replacement      ( replacement ),
     seed             ( rseed ),
     noNeighborLimit  ( noNeigh ),
     forwardTau       ( fwdTau ),
 
     // Set validated flag and instantiate Version
     validated        ( false ),
-    version          ( 0, 1, 5, "2019-08-07" )
+    version          ( 0, 1, 7, "2019-09-22" )
 {
     // Constructor code
     if ( method != Method::None ) {

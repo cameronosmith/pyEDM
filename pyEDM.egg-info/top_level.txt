@@ -1,2 +1,2 @@
-EDM_pybind
+pyBindEDM
 pyEDM

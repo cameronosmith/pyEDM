@@ -22,7 +22,7 @@
 // fist argument and it should not be in quotes. The second macro argument
 // defines a variable of type py::module used to initialize the module.
 //-------------------------------------------------------------------------
-PYBIND11_MODULE( EDM_pybind, pyMod ) {
+PYBIND11_MODULE( pyBindEDM, pyMod ) {
 
     pyMod.doc() = "Python bindings to cppEDM via pybind11.";
 
@@ -38,8 +38,9 @@ PYBIND11_MODULE( EDM_pybind, pyMod ) {
 
     // Load cppEDM DataFrame( path, file ) into py::dict
     pyMod.def( "ReadDataFrame", &ReadDataFrame,
-               py::arg("path") = "",
-               py::arg("file") = "" );
+               py::arg("path")   = "",
+               py::arg("file")   = "",
+               py::arg("noTime") = false );
     
     pyMod.def( "MakeBlock", &MakeBlock_pybind,
                py::arg("pyInput")     = DF(),
@@ -138,6 +139,7 @@ PYBIND11_MODULE( EDM_pybind, pyMod ) {
                py::arg("libSizes")    = std::string(""),
                py::arg("sample")      = 0,
                py::arg("random")      = true,
+               py::arg("replacement") = false,
                py::arg("seed")        = 0,
                py::arg("verbose")     = false );
     

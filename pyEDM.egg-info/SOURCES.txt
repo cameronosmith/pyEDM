@@ -1,6 +1,7 @@
 MANIFEST.in
 README.md
 setup.py
+cppEDM/src/.gitignore
 cppEDM/src/AuxFunc.cc
 cppEDM/src/AuxFunc.h
 cppEDM/src/AuxFunc.o
@@ -36,10 +37,10 @@ cppEDM/src/Version.h
 cppEDM/src/libEDM.a
 cppEDM/src/makefile
 cppEDM/src/makefile.windows
+pyEDM/AuxFunc.py
+pyEDM/CoreEDM.py
+pyEDM/LoadData.py
 pyEDM/__init__.py
-pyEDM/aux_funcs.py
-pyEDM/core_pyEDM.py
-pyEDM/load_data.py
 pyEDM.egg-info/PKG-INFO
 pyEDM.egg-info/SOURCES.txt
 pyEDM.egg-info/dependency_links.txt
