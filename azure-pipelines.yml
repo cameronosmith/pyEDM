@@ -46,5 +46,5 @@ steps:
 - script: pip install wheel
 - script: python setup.py bdist_wheel
 - script: mv test.py build/lib*
-- script: py build/lib*/test.py
+- script: python build/lib*/test.py
 
