@@ -12,3 +12,6 @@ install:
   - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   - move eigen_git/Eigen .
   - make -C ./cppEDM/src/ -f makefile.windows
+  - pip install pybind11
+  - pip install wheel
+  - python setup.py bdist_wheel
