@@ -9,5 +9,6 @@ init:
   - dir
 
 install:
+  - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
+  - move eigen_git/Eigen .
   - make -C ./cppEDM/src/ -f makefile.windows
-
