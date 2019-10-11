@@ -12,11 +12,11 @@ environment:
     # isn't covered by this document) at the time of writing.
 
     - PYTHON: "C:\\Python33"
-    - PYTHON: "C:\\Python34"
+    #- PYTHON: "C:\\Python34"
 
 
 init:
-  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" 
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
   - choco install make
   - dir
 
