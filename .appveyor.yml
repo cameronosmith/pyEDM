@@ -5,7 +5,7 @@ image: Visual Studio 2015
 # scripts that are called at very beginning, before repo cloning
 init:
   - choco install make
-  - make -C cppEDM/src
+  - make -C cppEDM/src -f makefile
 
 
 
