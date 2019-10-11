@@ -2,13 +2,13 @@
 # Build worker image (VM template)
 image: Visual Studio 2015
 
-clone_folder: c:\projects\pyedm
 
 install:
-  - Invoke-Environment '"%VS100COMNTOOLS%\vsvars32.bat"' 
+  - cmd: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat' amd64
   - choco install make
   - dir
   - make -C ./cppEDM/src/ -f makefile.windows
 
 
 
+clone_folder: c:\projects\pyedm
