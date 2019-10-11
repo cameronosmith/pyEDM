@@ -4,11 +4,11 @@ image: Visual Studio 2015
 
 
 install:
-  - cmd: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat' amd64
+  - 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat' amd64
   - choco install make
   - dir
   - make -C ./cppEDM/src/ -f makefile.windows
 
 
 
-clone_folder: c:\projects\pyedm
+#clone_folder: c:\projects\pyedm
