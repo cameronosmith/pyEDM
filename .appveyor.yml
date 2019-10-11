@@ -2,8 +2,9 @@
 # Build worker image (VM template)
 image: Visual Studio 2015
 
-# scripts that are called at very beginning, before repo cloning
-init:
+clone_folder: c:\projects\pyedm
+
+install:
   - choco install make
   - dir
   - make -C ./cppEDM/src/ -f makefile.windows
