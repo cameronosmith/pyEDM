@@ -5,6 +5,7 @@ image: Visual Studio 2015
 clone_folder: c:\projects\pyedm
 
 install:
+  - Invoke-Environment '"%VS100COMNTOOLS%\vsvars32.bat"' 
   - choco install make
   - dir
   - make -C ./cppEDM/src/ -f makefile.windows
