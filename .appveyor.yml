@@ -1,6 +1,6 @@
 
 # Build worker image (VM template)
-image: Visual Studio 2015
+image: Visual Studio 2017
 
 environment:
 
@@ -12,7 +12,7 @@ environment:
     # isn't covered by this document) at the time of writing.
 
     #- PYTHON: "C:\\Python33"
-    - PYTHON: "C:\\Python34"
+    - PYTHON: "C:\\Python34-x64"
 
 
 init:
