@@ -10,7 +10,7 @@ environment:
     # isn't covered by this document) at the time of writing.
 
     - PYTHON: "C:\\Python35"
-      MSVC_VER: "32"
+      MSVCVER: "32"
     - PYTHON: "C:\\Python35-x64"
       MSCVCPATH: "64"
 
@@ -18,7 +18,7 @@ init:
   #- call %MSCVC_PATH%
   #- call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars32.bat"
   #- call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"
-  - call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars%MSVC_VER%.bat"
+  - call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars%MSVCVER%.bat"
   - "cl tmp"
     
 install:
