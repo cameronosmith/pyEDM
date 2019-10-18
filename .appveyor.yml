@@ -9,31 +9,26 @@ environment:
     # The list here is complete (excluding Python 2.6, which
     # isn't covered by this document) at the time of writing.
 
-    - PYTHON: "C:\\Python35"
-      MSVCVER: "32"
-    - PYTHON: "C:\\Python35-x64"
-      MSVCVER: "64"
-
     - PYTHON: "C:\\Python27"
       MSVCVER: "32"
-    - PYTHON: "C:\\Python33"
-      MSVCVER: "32"
-    - PYTHON: "C:\\Python34"
-      MSVCVER: "32"
+    #- PYTHON: "C:\\Python33"
+    #  MSVCVER: "32"
+    #- PYTHON: "C:\\Python34"
+    #  MSVCVER: "32"
     - PYTHON: "C:\\Python35"
       MSVCVER: "32"
-    - PYTHON: "C:\\Python27-x64"
-      MSVCVER: "64"
-    - PYTHON: "C:\\Python33-x64"
-      MSVCVER: "64"
-      DISTUTILS_USE_SDK: "1"
-    - PYTHON: "C:\\Python34-x64"
-      MSVCVER: "64"
-      DISTUTILS_USE_SDK: "1"
-    - PYTHON: "C:\\Python35-x64"
-      MSVCVER: "64"
-    - PYTHON: "C:\\Python36-x64"
-      MSVCVER: "64"
+    #- PYTHON: "C:\\Python27-x64"
+    #  MSVCVER: "64"
+    #- PYTHON: "C:\\Python33-x64"
+    #  MSVCVER: "64"
+    #  DISTUTILS_USE_SDK: "1"
+    #- PYTHON: "C:\\Python34-x64"
+    #  MSVCVER: "64"
+    #  DISTUTILS_USE_SDK: "1"
+    #- PYTHON: "C:\\Python35-x64"
+    #  MSVCVER: "64"
+    #- PYTHON: "C:\\Python36-x64"
+    #  MSVCVER: "64"
 
 init:
   - call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars%MSVCVER%.bat"
@@ -48,7 +43,8 @@ install:
   - "build.cmd"
   - "%PYTHON%\\python.exe -m pip install wheel"
   - "%PYTHON%\\python.exe -m pip install pybind11"
-  - "%PYTHON%\\python.exe setup.py bdist_wheel"
+  - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
+
 
 build: off
 

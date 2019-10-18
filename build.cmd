@@ -13,7 +13,7 @@ IF "%DISTUTILS_USE_SDK%"=="1" (
     CALL "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 /release
     SET MSSdk=1
     REM Need the following to allow tox to see the SDK compiler
-    SET TOX_TESTENV_PASSENV=DISTUTILS_USE_SDK MSSdk INCLUDE LIB
+    #SET TOX_TESTENV_PASSENV=DISTUTILS_USE_SDK MSSdk INCLUDE LIB
 ) ELSE (
     ECHO Using default MSVC build environment
 )
