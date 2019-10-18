@@ -20,7 +20,7 @@ install:
   - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   - move eigen_git/Eigen .
   
-  - call %MSCVC_PATH%
+  - call '%MSCVC_PATH%'
 
   - make -C ./cppEDM/src/ -f makefile.windows
 
