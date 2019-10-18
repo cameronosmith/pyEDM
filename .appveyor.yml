@@ -22,13 +22,15 @@ environment:
 install:
   - choco install make
 
-  - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
-  - move eigen_git/Eigen .
+  #- git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
+  #- move eigen_git/Eigen .
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+
   - make -C ./cppEDM/src/ -f makefile.windows
 
-  - "%PYTHON%\\python.exe -m pip install wheel"
-  - "%PYTHON%\\python.exe -m pip install pybind11"
-  - "%PYTHON%\\python.exe setup.py bdist_wheel"
+  #- "%PYTHON%\\python.exe -m pip install wheel"
+  #- "%PYTHON%\\python.exe -m pip install pybind11"
+  #- "%PYTHON%\\python.exe setup.py bdist_wheel"
 
 build: off
 
