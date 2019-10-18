@@ -15,17 +15,13 @@ environment:
       MSCVCPATH: "64"
 
 init:
-  #- call %MSCVC_PATH%
-  #- call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars32.bat"
-  #- call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"
   - call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars%MSVCVER%.bat"
-  - "cl tmp"
+  - choco install make
     
 install:
 
   - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   - move eigen_git/Eigen .
-  - choco install make
   - make -C ./cppEDM/src/ -f makefile.windows
 
   - "build.cmd"
