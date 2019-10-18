@@ -13,12 +13,14 @@ environment:
       MSCVCPATH: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars32.bat"
     - PYTHON: "C:\\Python35-x64"
       MSCVCPATH: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"
-    
-install:
+
+init:
   #- call %MSCVC_PATH%
   #- call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars32.bat"
   #- call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"
-  - call '%MSCVC_PATH%'
+  - call %MSCVC_PATH%
+    
+install:
 
   - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   - move eigen_git/Eigen .
