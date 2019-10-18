@@ -21,12 +21,14 @@ environment:
     
 install:
   - choco install make
+
   - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   - move eigen_git/Eigen .
-  - "%PYTHON%\\python.exe -m pip install wheel"
-  - "%PYTHON%\\python.exe setup.py bdist_wheel"
-  - "%PYTHON%\\python.exe -m pip install pybind11"
   - make -C ./cppEDM/src/ -f makefile.windows
+
+  - "%PYTHON%\\python.exe -m pip install wheel"
+  - "%PYTHON%\\python.exe -m pip install pybind11"
+  - "%PYTHON%\\python.exe setup.py bdist_wheel"
 
 build: off
 
