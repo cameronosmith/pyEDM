@@ -2,6 +2,12 @@ matrix:
 
   include:
     - sudo: required
+      python:
+        #- "2.7"
+        - "3.4"
+        - "3.5"
+        #- "3.6"      
+        #- "3.7"
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
@@ -18,13 +24,6 @@ matrix:
     #  env: DOCKER_IMAGE=quay.io/pypa/manylinux2010_x86_64
     #       PLAT=manylinux2010_x86_64
   
-python:
-  #- "2.7"
-  - "3.4"
-  - "3.5"
-  #- "3.6"      
-  #- "3.7"
-
 install:
 
   - docker pull $DOCKER_IMAGE
