@@ -20,8 +20,7 @@ matrix:
 install:
 
   - docker pull $DOCKER_IMAGE
-  #- pip install -r requirements.txt
-  - pip install wheel
+  - pip install -r requirements.txt
 
 script:
 
@@ -32,5 +31,8 @@ script:
 
   - make -C cppEDM/src clean
   - make -C cppEDM/src 
+
+  - pip install pybind11 --user
+  - pip install wheel --user
 
   - python setup.py bdist_wheel
