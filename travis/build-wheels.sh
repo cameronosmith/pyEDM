@@ -2,7 +2,14 @@
 set -e -x
 
 # Install a system package required by our library
-yum install -y atlas-devel
+#yum install -y atlas-devel
+
+git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
+mv eigen_git/Eigen .
+
+make -C cppEDM/src clean
+make -C cppEDM/src 
+
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
