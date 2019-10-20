@@ -25,7 +25,7 @@ install:
 
 script:
 
-  - docker run --rm -e PLAT=$PLAT -v $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
+  - docker run --rm -e PLAT=$PLAT -v $DOCKER_IMAGE $PRE_CMD #/io/travis/build-wheels.sh
 
   - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
   - mv eigen_git/Eigen .
