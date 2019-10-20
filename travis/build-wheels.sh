@@ -12,8 +12,8 @@ make -C io/cppEDM/src
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
-    ls ${PYBIN}
-    if [ ${PYBIN} -eq "cp27-cp27m" ]
+    echo ${PYBIN}
+    if [[ ${PYBIN} == "cp27-cp27m" ]]
     then
         continue  ### resumes iteration of an enclosing for loop ###
     fi
