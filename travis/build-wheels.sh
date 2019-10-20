@@ -7,7 +7,7 @@ set -e -x
 git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
 mv eigen_git/Eigen .
 
-ls
+ls io
 
 make -C cppEDM/src clean
 make -C cppEDM/src 
