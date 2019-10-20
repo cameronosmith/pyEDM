@@ -8,7 +8,7 @@ git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
 mv eigen_git/Eigen io
 
 make -C io/cppEDM/src clean
-make -C iocppEDM/src 
+make -C io/cppEDM/src 
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
