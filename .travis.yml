@@ -25,13 +25,13 @@ install:
 
 script:
 
-  - docker run --rm -e PLAT=$PLAT -v $DOCKER_IMAGE $PRE_CMD #/io/travis/build-wheels.sh
+  - docker run --rm -e PLAT=$PLAT -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
 
-  - git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
-  - mv eigen_git/Eigen .
+  - docker exec build git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
+  - docker exec mv eigen_git/Eigen .
 
-  - make -C cppEDM/src clean
-  - make -C cppEDM/src 
+  - docker exec make -C cppEDM/src clean
+  - docker exec make -C cppEDM/src 
 
   - pip install pybind11 --user
   - pip install wheel --user
