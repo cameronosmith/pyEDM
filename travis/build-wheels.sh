@@ -5,12 +5,10 @@ set -e -x
 #yum install -y atlas-devel
 
 git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
-mv eigen_git/Eigen .
+mv eigen_git/Eigen io
 
-ls io
-
-make -C cppEDM/src clean
-make -C cppEDM/src 
+make -C io/cppEDM/src clean
+make -C iocppEDM/src 
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
