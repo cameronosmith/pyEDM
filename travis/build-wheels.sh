@@ -7,9 +7,9 @@ set -e -x
 git clone https://github.com/eigenteam/eigen-git-mirror eigen_git
 mv eigen_git/Eigen .
 
+git clone https://github.com/sugiharalab/cppEDM
 make -C cppEDM/src clean
 make -C cppEDM/src 
-
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
