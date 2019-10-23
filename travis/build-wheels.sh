@@ -13,7 +13,7 @@ make -C io/cppEDM/src
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     echo ${PYBIN}
-    if [[ ${PYBIN} == *"cp27-cp27m"* || ${PYBIN} == *"cp38-cp38"* ]]
+    if [[ ${PYBIN} == *"cp27-cp27m"* || ${PYBIN} == *"cp38-cp38"* || ${PYBIN} == *"cp34-cp34"* ]]
     then
         continue  ### resumes iteration of an enclosing for loop ###
     fi
