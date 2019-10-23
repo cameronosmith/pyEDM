@@ -30,9 +30,9 @@ script:
 
 deploy:
   provider: releases
-  api_key: "45dc9397905f3d17af07f65b97e9dd94d2259fc6"
+  api_key: "c5373519f8fb426c3ad7f8bcd141d334308a6a8a"
   file: "wheelhouse/*"
   skip_cleanup: true
   on:
-    tags: true
+    tags: false
 
