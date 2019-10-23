@@ -11,15 +11,20 @@ make -C io/cppEDM/src clean
 make -C io/cppEDM/src 
 
 # Compile wheels
-for PYBIN in /opt/python/*/bin; do
-    echo ${PYBIN}
-    if [[ ${PYBIN} == *"cp27-cp27m"* || ${PYBIN} == *"cp38-cp38"* || ${PYBIN} == *"cp34-cp34"* ]]
-    then
-        continue  ### resumes iteration of an enclosing for loop ###
-    fi
-    "${PYBIN}/pip" install -r /io/requirements.txt
-    "${PYBIN}/pip" wheel /io/ -w wheelhouse/
-done
+#for PYBIN in /opt/python/*/bin; do
+#    echo ${PYBIN}
+#    if [[ ${PYBIN} == *"cp27-cp27m"* || ${PYBIN} == *"cp38-cp38"* || ${PYBIN} == *"cp34-cp34"* ]]
+#    then
+#        continue  ### resumes iteration of an enclosing for loop ###
+#    fi
+#    "${PYBIN}/pip" install -r /io/requirements.txt
+#    "${PYBIN}/pip" wheel /io/ -w wheelhouse/
+#done
+
+# sample build on python 36 for download test
+
+"/opt/python/cp36-cp36m/bin/pip" install -r /io/requirements.txt
+"/opt/python/cp36-cp36m/bin/pip" wheel /io/ -w wheelhouse/
 
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
@@ -27,7 +32,7 @@ for whl in wheelhouse/*.whl; do
 done
 
 # Install packages and test
-for PYBIN in /opt/python/*/bin/; do
-    "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
-    (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
-done
+#for PYBIN in /opt/python/*/bin/; do
+#    "${PYBIN}/pip" install python-manylinux-demo --no-index -f /io/wheelhouse
+#    (cd "$HOME"; "${PYBIN}/nosetests" pymanylinuxdemo)
+#done
