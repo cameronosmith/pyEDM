@@ -10,6 +10,8 @@ pool:
   vmImage: $(vmImage)
   python.version: $(python.version)
 
+steps:
+
 #only setup the visual studio environment if on windowz
 - task: BatchScript@1
   inputs:
@@ -18,8 +20,6 @@ pool:
     modifyEnvironment: True 
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
-
-steps:
 
 #build cppEDM with respective makefile
 
