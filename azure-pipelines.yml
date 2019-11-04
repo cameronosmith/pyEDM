@@ -11,6 +11,7 @@ pool:
   python.version: $(python.version)
 
 steps:
+
 #only setup the visual studio environment if on windowz
 - task: BatchScript@1
   inputs:
