@@ -32,6 +32,8 @@ script:
 deploy:
   provider: releases
   api_key: "c5373519f8fb426c3ad7f8bcd141d334308a6a8a"
+  user: "cameronosmith"
+  password: ""
   #file_glob: true
   file: test.txt
   #file: wheelhouse/*
