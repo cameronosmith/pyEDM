@@ -1,2 +1,4 @@
 import pyEDM
-pyEDM.Examples()
+
+df = pyEDM.sampleData.get("TentMap")
+pyEDM.Embed(dataFrame=df)

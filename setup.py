@@ -44,7 +44,7 @@ import setuptools
 from   setuptools import setup, Extension
 from   setuptools.command.build_ext import build_ext
 
-__version__ = '0.1.7'  # Get version from cppEDM Parameter.cc ?
+__version__ = '0.1.10'  # Get version from cppEDM Parameter.cc ?
 
 # e.g. /tmp/pip-req-build-9ljrp27z/
 tmpInstallPath = os.path.dirname( os.path.abspath( __file__ ) )
@@ -127,11 +127,12 @@ class BuildExt( build_ext ):
     
     c_opts = {
         'msvc': ['/EHsc'],
-        'unix': [],
+        'unix': [ '-llapack' ],
     }
 
     if sys.platform == 'darwin':
-        c_opts['unix'] += ['-stdlib=libc++', '-mmacosx-version-min=10.7']
+        c_opts['unix'] += ['-stdlib=libc++', '-llapack',
+                           '-mmacosx-version-min=10.7']
 
     def build_extensions(self):
         ct = self.compiler.compiler_type
@@ -164,8 +165,8 @@ Extension_modules = [
         ],
         
         language     = 'c++',
-        library_dirs = [ EDM_Lib_Path ], # cppEDM libEDM.a -fPIC
-        libraries    = ['EDM'],          # cppEDM libEDM.a -fPIC
+        library_dirs = [ EDM_Lib_Path, '/usr/lib/' ],
+        libraries    = ['EDM','lapack'],
     ),
 ]
 

@@ -1,7 +1,0 @@
-#!/bin/bash
-make
-./SimplexTest
-./MultiviewTest
-./SMapTest
-./CCMTest
-make distclean

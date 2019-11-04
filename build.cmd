@@ -6,7 +6,7 @@
 :: More details at:
 :: https://github.com/cython/cython/wiki/CythonExtensionsOnWindows
 
-IF "%DISTUTILS_USE_SDK%"=="1" (
+IF "%MSVCVER%"=="64" (
     ECHO Configuring environment to build with MSVC on a 64bit architecture
     ECHO Using Windows SDK 7.1
     "C:\Program Files\Microsoft SDKs\Windows\v7.1\Setup\WindowsSdkVer.exe" -q -version:v7.1

@@ -14,7 +14,7 @@ all:	$(LIB)
 	cp $(LIB) ..\lib
 
 clean:
-	rm -f $(OBJ) $(LIB)
+	del -f $(OBJ) $(LIB)
 
 distclean:
 	del -f $(OBJ) $(LIB) ../lib/$(LIB) *~ *.bak *.csv
