@@ -11,7 +11,7 @@ CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD /I..\..\.. /EHsc /MD # /MT -
 
 all:	$(LIB)
 	lib  /NODEFAULTLIB:LIBCMT /NODEFAULTLIB:library /OUT:$(LIB) $(OBJ)
-	copy $(LIB) ..\lib
+	cp $(LIB) ..\lib
 
 clean:
 	rm -f $(OBJ) $(LIB)
