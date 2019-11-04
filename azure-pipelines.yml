@@ -32,6 +32,9 @@ steps:
   displayName: building cppEDM on windows
 
 
+- script: pip install pybind11
+- script: pip install wheel
+
 - script: python setup.py build
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: building pyEDM
