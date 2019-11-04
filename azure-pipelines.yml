@@ -4,7 +4,7 @@ strategy:
     MacOS_3.7.4:
       vmImage: 'macos-10.13'
       build_name: 'MacOS_3.7.4_EDM'
-      python.version: '3.7.5'
+      python.version: '3.7.azure-pipelines.yml'
 
 pool:
   vmImage: $(vmImage)
@@ -14,6 +14,7 @@ steps:
 
 - script: python --version
 
+- script: make -C cppEDM/src clean
 - script: make -C cppEDM/src
   condition: eq( variables['Agent.OS'], 'Darwin' )
   displayName: building cppEDM on macOS
