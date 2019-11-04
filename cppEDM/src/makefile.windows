@@ -1,6 +1,6 @@
 
 CC  = cl
-OBJ = Common.obj AuxFunc.obj DateTimeUtil.o Parameter.obj Embed.obj\
+OBJ = Common.obj AuxFunc.obj DateTimeUtil.obj Parameter.obj Embed.obj\
 	Interface.obj Neighbors.obj Simplex.obj Eval.obj CCM.obj\
 	Multiview.obj SMap.obj 
 
@@ -14,7 +14,7 @@ all:	$(LIB)
 	copy $(LIB) ..\lib
 
 clean:
-	del -f $(OBJ) $(LIB)
+	rm -f $(OBJ) $(LIB)
 
 distclean:
 	del -f $(OBJ) $(LIB) ../lib/$(LIB) *~ *.bak *.csv
