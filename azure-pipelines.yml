@@ -32,3 +32,8 @@ steps:
   displayName: building cppEDM on windows
 
 
+- script: python setup.py build
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: building pyEDM
+
+
