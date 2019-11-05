@@ -166,7 +166,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path, '/usr/lib/' ],
-        libraries    = ['EDM','lapack','blas'],
+        libraries    = ['lapack','blas','EDM'],
     ),
 ]
 
