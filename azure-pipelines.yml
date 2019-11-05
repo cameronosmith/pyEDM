@@ -34,7 +34,7 @@ steps:
 - script: pip install wheel
 - script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
 - script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/BLAS.lib --output blas.lib
-- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACKE.lib--output lapacke.lib
+- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACKE.lib --output lapacke.lib
 - script: mv lapack.lib cppEDM/lib
 - script: mv lapacke.lib cppEDM/lib
 - script: mv blas.lib cppEDM/lib
