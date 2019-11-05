@@ -8,5 +8,6 @@ strategy:
 pool:
   vmImage: $(vmImage)
 
+steps:
 - script: gcc test_blas.cc -lblas
 
