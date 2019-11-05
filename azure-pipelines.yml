@@ -20,6 +20,18 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
+- bash: echo "##vso[task.prependpath]$CONDA/bin"
+    displayName: Add conda to PATH
+
+- bash: conda create --yes --quiet --name myEnvironment
+displayName: Create Anaconda environment
+
+- bash: |
+  source activate myEnvironment
+  conda install --name myEnvironment conda install -c conda-forge lapack 
+  conda install --name myEnvironment conda install -c conda-forge blas 
+displayName: Install Anaconda packages
+
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
@@ -32,11 +44,7 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: pip install wheel
-- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
-- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/BLAS.lib --output blas.lib
-- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACKE.lib --output lapacke.lib
-- script: mv lapack.lib cppEDM/lib
-- script: mv lapacke.lib cppEDM/lib
-- script: mv blas.lib cppEDM/lib
-- script: python setup.py bdist_wheel
+- bash: |
+  source activate myEnvironment 
+  python setup.py bdist_wheel
 
