@@ -4,11 +4,14 @@ strategy:
     Windows_3.6.8:
       vmImage: 'vs2017-win2016'
       build_name: 'Windows_3.6.8_EDM'
+      python.version: '3.6.8'
 
 pool:
   vmImage: $(vmImage)
+  python.version: $(python.version)
 
 steps:
+#only setup the visual studio environment if on windowz
 - task: BatchScript@1
   inputs:
     filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
@@ -16,6 +19,20 @@ steps:
     modifyEnvironment: True 
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
+
+#build cppEDM with respective makefile
+- script: make -C cppEDM/src -f makefile.windows
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: building cppEDM on windows
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+
+#build the package and download
+- script: pip install pybind11
+- script: pip install wheel
 - script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
-- script: cl test_blas.cc lapack.lib tmp.lib
+- script: mv lapack.lib cppEDM/lib
+- script: python setup.py bdist_wheel
 
