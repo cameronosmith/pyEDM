@@ -21,16 +21,13 @@ steps:
   displayName: setup visual studio env on windows
 
 - bash: echo "##vso[task.prependpath]$CONDA/bin"
-    displayName: Add conda to PATH
 
 - bash: conda create --yes --quiet --name myEnvironment
-displayName: Create Anaconda environment
 
 - bash: |
   source activate myEnvironment
   conda install --name myEnvironment conda install -c conda-forge lapack 
   conda install --name myEnvironment conda install -c conda-forge blas 
-displayName: Install Anaconda packages
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
