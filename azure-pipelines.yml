@@ -33,6 +33,8 @@ steps:
 - script: pip install pybind11
 - script: pip install wheel
 - script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
+- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/BLAS.lib --output blas.lib
 - script: mv lapack.lib cppEDM/lib
+- script: mv blas.lib cppEDM/lib
 - script: python setup.py bdist_wheel
 
