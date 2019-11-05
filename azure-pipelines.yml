@@ -17,5 +17,5 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 - script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
-- script: cl test_blas.cc lapack.lib
+- script: cl test_blas.cc lapack.lib tmp.lib
 
