@@ -26,8 +26,12 @@ steps:
   displayName: Add conda to PATH
 
 - script: conda create --yes --quiet --name myEnvironment
-- bash: source activate myEnvironment; conda install --name myEnvironment lapack; conda install --name myEnvironment blas;
-  displayName: Add conda to PATH
+  displayName: create conda env
+
+- bash: source activate myEnvironment; conda install --name myEnvironment lapack 
+  displayName: install lapack
+- bash: source activate myEnvironment; conda install --name myEnvironment blas;
+  displayName: install blas
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
