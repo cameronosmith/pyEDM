@@ -23,7 +23,7 @@ steps:
 - bash: echo "##vso[task.prependpath]$CONDA/bin"
   displayName: Add conda to PATH
 
-- script: $CONDA/bin create --yes --quiet --name myEnvironment
+- script: $CONDA/bin/conda create --yes --quiet --name myEnvironment
 - script: $CONDA create --yes --quiet --name myEnvironment
 
 - bash: source activate myEnvironment; conda install --name myEnvironment conda install -c conda-forge lapack; conda install --name myEnvironment conda install -c conda-forge blas 
