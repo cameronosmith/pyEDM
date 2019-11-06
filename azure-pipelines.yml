@@ -41,7 +41,5 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: pip install wheel
-- bash: |
-  source activate myEnvironment 
-  python setup.py bdist_wheel
+- bash: source activate myEnvironment; python setup.py bdist_wheel
 
