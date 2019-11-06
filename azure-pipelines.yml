@@ -26,10 +26,7 @@ steps:
 - bash: conda create --yes --quiet --name myEnvironment
   displayName: Add conda to PATH
 
-- bash: |
-  source activate myEnvironment
-  conda install --name myEnvironment conda install -c conda-forge lapack 
-  conda install --name myEnvironment conda install -c conda-forge blas 
+- bash: source activate myEnvironment; conda install --name myEnvironment conda install -c conda-forge lapack; conda install --name myEnvironment conda install -c conda-forge blas 
   displayName: Add conda to PATH
 
 #build cppEDM with respective makefile
