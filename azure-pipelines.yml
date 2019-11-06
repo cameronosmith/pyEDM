@@ -20,12 +20,12 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
-- bash: echo "##vso[task.prependpath]$CONDA/bin"
+
+
+- powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
   displayName: Add conda to PATH
 
-- script: $CONDA/bin/conda create --yes --quiet --name myEnvironment
-- script: $CONDA create --yes --quiet --name myEnvironment
-
+- script: conda create --yes --quiet --name myEnvironment
 - bash: source activate myEnvironment; conda install --name myEnvironment conda install -c conda-forge lapack; conda install --name myEnvironment conda install -c conda-forge blas 
   displayName: Add conda to PATH
 
