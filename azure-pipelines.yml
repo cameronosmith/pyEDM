@@ -23,8 +23,8 @@ steps:
   displayName: setup visual studio env on windows
 
 
-- powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
-  displayName: Add conda to PATH
+#- powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
+#  displayName: Add conda to PATH
 
 #- script: conda create --yes --quiet --name myEnvironment
 #  displayName: create conda env
