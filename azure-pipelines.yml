@@ -26,8 +26,8 @@ steps:
 - powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
   displayName: Add conda to PATH
 
-- script: conda create --yes --quiet --name myEnvironment
-  displayName: create conda env
+#- script: conda create --yes --quiet --name myEnvironment
+#  displayName: create conda env
 
 #- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge lapack 
 #  displayName: install lapack
@@ -51,7 +51,6 @@ steps:
     filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
     arguments: 'amd64'
     modifyEnvironment: True 
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
 - bash:  python setup.py bdist_wheel
