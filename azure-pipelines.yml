@@ -46,10 +46,5 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
-- task: CondaEnvironment@1
-  inputs: python setup.py bdist_wheel
-    environmentName: TempEnv
-    installOptions: conda-forge lapack blas
-
-
+- script:   python setup.py bdist_wheel
 
