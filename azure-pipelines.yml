@@ -35,9 +35,9 @@ steps:
 #  displayName: install blas
 
 #build cppEDM with respective makefile
-- script: make -C cppEDM/src -f makefile.windows
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: building cppEDM on windows
+#- script: make -C cppEDM/src -f makefile.windows
+#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+#  displayName: building cppEDM on windows
 
 - task: UsePythonVersion@0
   inputs:
@@ -46,12 +46,12 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: pip install wheel
-- task: BatchScript@1
-  inputs:
-    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-    arguments: 'amd64'
-    modifyEnvironment: True 
-  displayName: setup visual studio env on windows
+#- task: BatchScript@1
+#  inputs:
+#    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+#    arguments: 'amd64'
+#    modifyEnvironment: True 
+#  displayName: setup visual studio env on windows
 
 - bash:  python setup.py bdist_wheel
 
