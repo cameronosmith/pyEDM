@@ -25,20 +25,7 @@ steps:
   inputs:
     createCustomEnvironment: True
     environmentName: TempEnv
-    #packageSpecs: 'python=3' # Optional
-    #updateConda: true # Optional
     installOptions: conda-forge lapack blas
-
-- powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
-  displayName: Add conda to PATH
-
-- powershell: conda create --yes --quiet --name myEnvironment
-  displayName: create conda env
-
-- powershell: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge lapack 
-  displayName: install lapack
-- powershell: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge blas;
-  displayName: install blas
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
@@ -59,5 +46,11 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
-- script:  source activate myEnvironment; python setup.py bdist_wheel
+- task: CondaEnvironment@1
+  inputs: python setup.py bdist_wheel
+    #createCustomEnvironment: True
+    environmentName: TempEnv
+    installOptions: conda-forge lapack blas
+
+
 
