@@ -27,9 +27,9 @@ steps:
 - script: conda create --yes --quiet --name myEnvironment
   displayName: create conda env
 
-- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge lapack 
+- script: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge lapack 
   displayName: install lapack
-- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge blas;
+- script: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge blas;
   displayName: install blas
 
 #build cppEDM with respective makefile
@@ -51,5 +51,5 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
-- script:  python setup.py bdist_wheel
+- script:  source activate myEnvironment; python setup.py bdist_wheel
 
