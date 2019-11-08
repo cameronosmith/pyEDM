@@ -21,6 +21,14 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
+- task: CondaEnvironment@1
+  inputs:
+    createCustomEnvironment: True
+    environmentName: TempEnv
+    #packageSpecs: 'python=3' # Optional
+    #updateConda: true # Optional
+    installOptions: conda-forge lapack blas
+
 - powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
   displayName: Add conda to PATH
 
