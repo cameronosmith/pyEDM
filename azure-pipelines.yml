@@ -35,9 +35,9 @@ steps:
 #  displayName: install blas
 
 #build cppEDM with respective makefile
-#- script: make -C cppEDM/src -f makefile.windows
-#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-#  displayName: building cppEDM on windows
+- script: make -C cppEDM/src -f makefile.windows
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: building cppEDM on windows
 
 - task: UsePythonVersion@0
   inputs:
