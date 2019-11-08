@@ -24,13 +24,13 @@ steps:
 - powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
   displayName: Add conda to PATH
 
-#- script: conda create --yes --quiet --name myEnvironment
-#  displayName: create conda env
+- script: conda create --yes --quiet --name myEnvironment
+  displayName: create conda env
 
-#- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge lapack 
-#  displayName: install lapack
-#- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge blas;
-#  displayName: install blas
+- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge lapack 
+  displayName: install lapack
+- bash: source activate myEnvironment; conda install --yes --name myEnvironment -c conda-forge blas;
+  displayName: install blas
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src -f makefile.windows
