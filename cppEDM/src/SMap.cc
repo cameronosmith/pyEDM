@@ -327,7 +327,8 @@ std::valarray < double > SVD( DataFrame    < double > A,
 //-------------------------------------------------------------------------
 // DOUBLE PRECISION = REAL*8 = c++ double
 //-------------------------------------------------------------------------
-extern "C" {
+void dgels_();
+/*extern "C" {
     
     void dgelss_( int    *M,
                   int    *N,
@@ -343,6 +344,7 @@ extern "C" {
                   int    *LWORK,
                   int    *INFO );
 }
+*/
 
 //-----------------------------------------------------------------------
 //
@@ -382,7 +384,7 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
 #endif
     
     // Call dgelss with lwork = -1 to query optimal workspace size:
-    dgelss_( &m, &n, &nrhs, a, &lda, b, &ldb, s, &rcond,
+    dgelss( &m, &n, &nrhs, a, &lda, b, &ldb, s, &rcond,
              &rank, &workSize, &lwork, &info );
     
     if ( info ) {
@@ -400,7 +402,7 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
     lwork = (int) workSize;
 
     // Call dgelss for SVD solution using lwork workSize:
-    dgelss_( &m, &n, &nrhs, a, &lda, b, &ldb, s, &rcond,
+    dgelss( &m, &n, &nrhs, a, &lda, b, &ldb, s, &rcond,
              &rank, work, &lwork, &info );
 
     if ( info ) {
