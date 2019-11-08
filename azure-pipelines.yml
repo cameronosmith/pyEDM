@@ -12,8 +12,6 @@ pool:
 
 steps:
 
-- bash: link /LTCG
-
 #only setup the visual studio environment if on windowz
 - task: BatchScript@1
   inputs:
@@ -23,7 +21,7 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
-- bash: link /LTCG
+- bash: link.exe /LTCG 
 
 
 #- powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
@@ -47,7 +45,7 @@ steps:
 #    versionSpec: '$(python.version)'
 
 #build the package and download
-#- script: pip install pybind11
+- script: pip install pybind11
 #- script: pip install wheel
 #- task: BatchScript@1
 #  inputs:
