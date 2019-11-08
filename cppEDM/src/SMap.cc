@@ -327,7 +327,9 @@ std::valarray < double > SVD( DataFrame    < double > A,
 //-------------------------------------------------------------------------
 // DOUBLE PRECISION = REAL*8 = c++ double
 //-------------------------------------------------------------------------
-void dgelss( int    *M,
+
+extern "C" {
+    void dgelss(      int    *M,
                   int    *N,
                   int    *NRHS,
                   double *A,
@@ -340,6 +342,7 @@ void dgelss( int    *M,
                   double *WORK,
                   int    *LWORK,
                   int    *INFO );
+}
 
 /*extern "C" {
     
