@@ -21,7 +21,8 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
-- bash: link.exe /LTCG 
+#- bash: link.exe /LTCG 
+- bash: C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\amd64\link.exe /LTCG 
 
 
 #- powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
