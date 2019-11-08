@@ -21,6 +21,9 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
+
+- script: make -C cppEDM/src -f makefile.windows
+
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
