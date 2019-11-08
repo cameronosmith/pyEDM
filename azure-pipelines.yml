@@ -48,7 +48,6 @@ steps:
 
 - task: CondaEnvironment@1
   inputs: python setup.py bdist_wheel
-    #createCustomEnvironment: True
     environmentName: TempEnv
     installOptions: conda-forge lapack blas
 
