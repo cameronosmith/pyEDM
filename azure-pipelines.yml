@@ -3,7 +3,7 @@ strategy:
   matrix:
     Windows_3.6.8:
       #vmImage: 'vs2017-win2016'
-      vmImage: 'win2019'
+      vmImage: 'windows-2019'
       build_name: 'Windows_3.6.8_EDM'
       python.version: '3.6.8'
 
