@@ -384,8 +384,8 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
 #endif
     
     // Call dgelss with lwork = -1 to query optimal workspace size:
-    dgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond,
-             rank, workSize, lwork, info );
+    dgelss_( 1, 1, 1, 1, 1, 1, 1, 1, 1,
+             1, 1, 1, 1 );
     
     if ( info ) {
         throw std::runtime_error( "Lapack_SVD(): dgelss failed on query.\n" );
@@ -402,8 +402,8 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
     lwork = (int) workSize;
 
     // Call dgelss for SVD solution using lwork workSize:
-    dgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond,
-             rank, work, lwork, info );
+    //dgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond,
+             //rank, work, lwork, info );
 
     if ( info ) {
         throw std::runtime_error( "Lapack_SVD(): dgelss failed.\n" );
