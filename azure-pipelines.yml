@@ -21,6 +21,7 @@ steps:
   displayName: setup visual studio env on windows
 
 - script: make -C cppEDM/src -f makefile.windows
+- script: cd cppEDM/tests; make;
 
 - task: UsePythonVersion@0
   inputs:
