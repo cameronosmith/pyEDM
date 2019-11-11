@@ -20,6 +20,7 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
+- script: make -C cppEDM/src clean #-f makefile.windows
 - script: make -C cppEDM/src #-f makefile.windows
 - script: make -C cppEDM/tests
 
