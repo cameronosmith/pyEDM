@@ -330,19 +330,19 @@ std::valarray < double > SVD( DataFrame    < double > A,
 
 extern "C" {
     
-    void dgelss_64_( int    *M,
-                  int    *N,
-                  int    *NRHS,
-                  double *A,
-                  int    *LDA,
-                  double *B,
-                  int    *LDB,
-                  double *S,
-                  double *RCOND,
-                  int    *RANK,
-                  double *WORK,
-                  int    *LWORK,
-                  int    *INFO );
+    void dgelss_( int    M,
+                  int    N,
+                  int    NRHS,
+                  double A,
+                  int    LDA,
+                  double B,
+                  int    LDB,
+                  double S,
+                  double RCOND,
+                  int    RANK,
+                  double WORK,
+                  int    LWORK,
+                  int    INFO );
 }
 
 
@@ -384,8 +384,8 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
 #endif
     
     // Call dgelss with lwork = -1 to query optimal workspace size:
-    dgelss_64_( &m, &n, &nrhs, a, &lda, b, &ldb, s, &rcond,
-             &rank, &workSize, &lwork, &info );
+    dgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond,
+             rank, workSize, lwork, info );
     
     if ( info ) {
         throw std::runtime_error( "Lapack_SVD(): dgelss failed on query.\n" );
@@ -402,8 +402,8 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
     lwork = (int) workSize;
 
     // Call dgelss for SVD solution using lwork workSize:
-    dgelss_64_( &m, &n, &nrhs, a, &lda, b, &ldb, s, &rcond,
-             &rank, work, &lwork, &info );
+    dgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond,
+             rank, work, lwork, info );
 
     if ( info ) {
         throw std::runtime_error( "Lapack_SVD(): dgelss failed.\n" );
