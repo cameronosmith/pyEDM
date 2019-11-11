@@ -2,8 +2,7 @@
 strategy:
   matrix:
     Windows_3.6.8:
-      #vmImage: 'vs2017-win2016'
-      vmImage: 'windows-2019'
+      vmImage: 'vs2017-win2016'
       build_name: 'Windows_3.6.8_EDM'
       python.version: '3.6.8'
 
@@ -13,24 +12,13 @@ pool:
 
 steps:
 
-#only setup the visual studio environment if on windowz
-#- task: BatchScript@1
-#  inputs:
-#    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-#    arguments: 'amd64'
-#    modifyEnvironment: True 
-#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-#  displayName: setup visual studio env on windows
-
-
+only setup the visual studio environment if on windowz
 - task: BatchScript@1
-  displayName: 'Setup VS2017 env vars'
   inputs:
-    filename: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat'
+    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
     arguments: 'amd64'
-    modifyEnvironment: true
-# -vcvars_ver=14.11'
-
+    modifyEnvironment: True 
+  displayName: setup visual studio env on windows
 
 - script: make -C cppEDM/src -f makefile.windows
 
