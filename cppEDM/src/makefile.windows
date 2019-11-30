@@ -12,7 +12,7 @@ CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD /EHsc /MD # /MT -DDEBUG -DDE
 
 all:	$(LIB)
 	lib /NODEFAULTLIB:LIBCMT /NODEFAULTLIB:library /OUT:$(LIB) /LIBPATH:$(LAPACK_LIB_PATH) $(LAPACK_LIB) $(OBJ)
-	copy $(LIB) ..\lib
+	cp $(LIB) ..\lib
 
 clean:
 	del -f $(OBJ) $(LIB)
