@@ -6,13 +6,13 @@ OBJ = Common.obj AuxFunc.obj DateTimeUtil.obj Parameter.obj Embed.obj\
 
 LIB = EDM.lib
 LAPACK_LIB = liblapack.lib
-LAPACK_LIB_PATH = ..\lib #..\..\..\lapack\w32
+LAPACK_LIB_PATH = ..\lib
 
 CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD /EHsc /MD # /MT -DDEBUG -DDEBUG_ALL
 
 all:	$(LIB)
 	lib /NODEFAULTLIB:LIBCMT /NODEFAULTLIB:library /OUT:$(LIB) /LIBPATH:$(LAPACK_LIB_PATH) $(LAPACK_LIB) $(OBJ)
-	cp $(LIB) ..\lib
+	copy $(LIB) ..\lib
 
 clean:
 	del -f $(OBJ) $(LIB)
@@ -57,8 +57,6 @@ Multiview.obj: Multiview.cc
 
 SMap.obj: SMap.cc
 	$(CC) /c SMap.cc $(CFLAGS)
-
-
 
 # Depedencies from makedepend on Linux
 Common.obj: Common.h DataFrame.h
