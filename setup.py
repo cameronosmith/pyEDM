@@ -195,6 +195,7 @@ setup(
     packages         = setuptools.find_packages(), # Enable ./EDM Python module
     ext_modules      = Extension_modules,
     package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py'] },
+    data_files       = [('', ['libopenblas.dll'])],
     #test_suite      = "tests", # ??? [1]
     install_requires = ['pybind11>=2.2', 'pandas>=0.20.3', 'matplotlib>=2.2'],
     python_requires  = '>=3',
