@@ -153,6 +153,11 @@ class BuildExt( build_ext ):
 #----------------------------------------------------------------------
 #
 #----------------------------------------------------------------------
+
+# only windows requires lapack library (provided by openblas binary)
+openblas_libname = "libopenblas" if sys.platform.startswith('win') else ""
+print("windows true is :" + openblas_libname)
+
 Extension_modules = [
     Extension(
         name = 'pyBindEDM',
@@ -166,11 +171,11 @@ Extension_modules = [
         ],
         
         language     = 'c++',
-        #library_dirs = [ EDM_Lib_Path, '/usr/lib/', '"C:/JP/lapack/w32"'],
-        library_dirs = [ EDM_Lib_Path, '/usr/lib/' ],
-        libraries    = ['EDM'],
+        library_dirs = [ EDM_Lib_Path ],
+        libraries    = [ 'EDM', openblas_libname ],
     ),
 ]
+
 
 #----------------------------------------------------------------------
 #
