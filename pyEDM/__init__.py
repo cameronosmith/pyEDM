@@ -1,9 +1,8 @@
 '''Python interface to cppEDM github.com/SugiharaLab/cppEDM'''
 
-import sys, os
+import os, ctypes
 dir_path = os.path.dirname(os.path.realpath(__file__))
-os.environ['PATH'] += ';'+dir_path
-print(os.environ['PATH'])
+ctypes.WinDLL(dir_path+os.path.sep+"libopenblas.dll")
 
 from pyEDM.CoreEDM import *
 from pyEDM.AuxFunc import *
