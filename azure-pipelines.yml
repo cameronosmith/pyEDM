@@ -29,6 +29,6 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: pip install wheel
-- script: python setup.py install --user
+- script: python setup.py bdist_wheel
 - script: cd dist; echo "import pyEDM" | python
 
