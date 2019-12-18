@@ -20,11 +20,6 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
-- bash: mkdir tester; echo "hi" > tester/test.txt
-- bash: cd tester; ls;
-  workingDirectory: tester;
-
-
 #- script: make -C cppEDM/src -f makefile.windows
 
 - task: UsePythonVersion@0
@@ -34,6 +29,6 @@ steps:
 #build the package and download
 - script: pip install pybind11
 - script: pip install wheel
-#- script: python setup.py bdist_wheel
+- script: python setup.py install
 #- script: cd dist; echo "import pyEDM" | python
 
