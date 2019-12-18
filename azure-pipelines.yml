@@ -20,7 +20,7 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
-#- script: make -C cppEDM/src -f makefile.windows
+- script: make -C cppEDM/src -f makefile.windows
 
 - task: UsePythonVersion@0
   inputs:
