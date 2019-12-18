@@ -20,8 +20,8 @@ steps:
     modifyEnvironment: True 
   displayName: setup visual studio env on windows
 
-- script: mkdir tester; echo "hi" > tester/test.txt
-- script: cd tester; ls;
+- bash: mkdir tester; echo "hi" > tester/test.txt
+- bash: cd tester; ls;
   workingDirectory: tester;
 
 
