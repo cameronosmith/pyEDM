@@ -5,14 +5,16 @@ set -e -x
 pys=(/opt/python/*/bin)
 
 # Filter out Python 3.4
-pys=(${pys[@]//*34*/})
+pys=(${pys[@]//*27*/})
 
 make -C /io/cppEDM/src
 
 # Compile wheels
 for PYBIN in "${pys[@]}"; do
     "${PYBIN}/pip" install -r /io/requirements.txt
-    "${PYBIN}/pip" wheel /io/ -w wheelhouse/
+    #"${PYBIN}/pip" wheel /io/ -w wheelhouse/
+    "${PYBIN}/python" /io/setup.py bdist_wheel --dist-dir wheelhouse/
+    
 done
 
 # Bundle external shared libraries into the wheels

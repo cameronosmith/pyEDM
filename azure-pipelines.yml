@@ -27,3 +27,6 @@ steps:
       cp wheelhouse/pyEDM*.whl dist/.
     displayName: Build wheels
   - template: .ci/azure-publish-dist.yml
+
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: $(plat)
