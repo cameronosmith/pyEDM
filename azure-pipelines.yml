@@ -20,6 +20,7 @@ pool:
 steps:
   - script: |
       set -ex
+      chmod +x .ci/build-wheels.sh
       docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) ./io/.ci/build-wheels.sh
       ls -lh wheelhouse/
       mkdir -p dist
