@@ -86,7 +86,7 @@ Parameters::Parameters(
 
     // Set validated flag and instantiate Version
     validated        ( false ),
-    version          ( 1, 0, 1, "2019-11-24" )
+    version          ( 1, 0, 1, "2019-12-12" )
 {
     // Constructor code
     if ( method != Method::None ) {
@@ -129,6 +129,16 @@ void Parameters::Validate() {
         }
         int lib_start = std::stoi( lib_vec[0] );
         int lib_end   = std::stoi( lib_vec[1] );
+
+        if ( method == Method::Simplex or method == Method::SMap ) {
+            // Don't check if None, Embed or CCM since default of "1 1" is used.
+            if ( lib_start >= lib_end ) {
+                std::stringstream errMsg;
+                errMsg << "Parameters::Validate(): library start "
+                       << lib_start << " exceeds end " << lib_end << ".\n";
+                throw std::runtime_error( errMsg.str() );
+            }
+        }
         
         library = std::vector<size_t>( lib_end - lib_start + 1 );
         std::iota ( library.begin(), library.end(), lib_start - 1 );
@@ -146,6 +156,16 @@ void Parameters::Validate() {
         }
         int pred_start = std::stoi( pred_vec[0] );
         int pred_end   = std::stoi( pred_vec[1] );
+        
+        if ( method == Method::Simplex or method == Method::SMap ) {
+            // Don't check if None, Embed or CCM since default of "1 1" is used.
+            if ( pred_start >= pred_end ) {
+                std::stringstream errMsg;
+                errMsg << "Parameters::Validate(): prediction start "
+                       << pred_start << " exceeds end " << pred_end << ".\n";
+                throw std::runtime_error( errMsg.str() );
+            }
+        }
         
         prediction = std::vector<size_t>( pred_end - pred_start + 1 );
         std::iota ( prediction.begin(), prediction.end(), pred_start - 1 );
@@ -182,8 +202,8 @@ void Parameters::Validate() {
     //--------------------------------------------------------------
     
     // Columns
-    // If columns are purely numeric, then populate vector<size_t> columnIndex
-    // otherwise fill in vector<string> columnNames
+    // If columns are purely integer, then populate vector<size_t> columnIndex
+    // Otherwise fill in vector<string> columnNames
     if ( columns_str.size() ) {
         
         std::vector<std::string> columns_vec = SplitString( columns_str,
@@ -192,7 +212,9 @@ void Parameters::Validate() {
         bool onlyDigits = false;
         
         for ( auto ci = columns_vec.begin(); ci != columns_vec.end(); ++ci ) {
-            onlyDigits = OnlyDigits( *ci );
+            onlyDigits = OnlyDigits( *ci, true );
+            
+            if ( not onlyDigits ) { break; }
         }
         
         if ( onlyDigits ) {
@@ -208,7 +230,7 @@ void Parameters::Validate() {
     
     // target
     if ( target_str.size() ) {
-        bool onlyDigits = OnlyDigits( target_str );
+        bool onlyDigits = OnlyDigits( target_str, true );
         if ( onlyDigits ) {
             targetIndex = std::stoi( target_str );
         }

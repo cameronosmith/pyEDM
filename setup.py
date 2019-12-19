@@ -50,6 +50,7 @@ __version__ = '1.0.1'  # Get version from cppEDM Parameter.cc ?
 tmpInstallPath = os.path.dirname( os.path.abspath( __file__ ) )
 EDM_Lib_Path   = os.path.join( tmpInstallPath, "cppEDM/lib" )
 EDM_H_Path     = os.path.join( tmpInstallPath, "cppEDM/src" )
+OBLAS_Lib_Path = os.path.join( tmpInstallPath, "pyEDM/win_64_dependencies" )
 
 # Set default cppEDM library name
 platform = sys.platform
@@ -153,11 +154,6 @@ class BuildExt( build_ext ):
 #----------------------------------------------------------------------
 #
 #----------------------------------------------------------------------
-
-# only windows requires lapack library (provided by openblas binary)
-openblas_libname = "libopenblas" if sys.platform.startswith('win') else ""
-print("windows true is :" + openblas_libname)
-
 Extension_modules = [
     Extension(
         name = 'pyBindEDM',
@@ -171,11 +167,10 @@ Extension_modules = [
         ],
         
         language     = 'c++',
-        library_dirs = [ EDM_Lib_Path ],
-        libraries    = [ 'EDM', openblas_libname ],
+        library_dirs = [ EDM_Lib_Path, '/usr/lib/', OBLAS_Lib_Path ],
+        libraries    = ['EDM','libopenblas'],
     ),
 ]
-
 
 #----------------------------------------------------------------------
 #
@@ -194,7 +189,7 @@ setup(
                        'of California.',
     packages         = setuptools.find_packages(), # Enable ./EDM Python module
     ext_modules      = Extension_modules,
-    package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py','*.dll'] },
+    package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py'] },
     #test_suite      = "tests", # ??? [1]
     install_requires = ['pybind11>=2.2', 'pandas>=0.20.3', 'matplotlib>=2.2'],
     python_requires  = '>=3',

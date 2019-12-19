@@ -6,7 +6,7 @@ OBJ = Common.obj AuxFunc.obj DateTimeUtil.obj Parameter.obj Embed.obj\
 
 LIB = EDM.lib
 LAPACK_LIB = liblapack.lib
-LAPACK_LIB_PATH = ..\lib
+LAPACK_LIB_PATH = ..\..\..\lapack\w32
 
 CFLAGS = -DCCM_THREADED -DMULTIVIEW_VALUES_OVERLOAD /EHsc /MD # /MT -DDEBUG -DDEBUG_ALL
 
