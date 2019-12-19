@@ -51,6 +51,7 @@ tmpInstallPath = os.path.dirname( os.path.abspath( __file__ ) )
 EDM_Lib_Path   = os.path.join( tmpInstallPath, "cppEDM/lib" )
 EDM_H_Path     = os.path.join( tmpInstallPath, "cppEDM/src" )
 OBLAS_Lib_Path = os.path.join( tmpInstallPath, "pyEDM/win_64_dependencies" )
+Bindings_Path  = os.path.join( tmpInstallPath, "src/bindings/" )
 
 # Set default cppEDM library name
 platform = sys.platform
@@ -161,7 +162,7 @@ Extension_modules = [
     Extension(
         name = 'pyBindEDM',
 
-        sources = [ 'src/bindings/PyBind.cpp' ],
+        sources = [ Bindings_Path + 'PyBind.cpp' ],
         
         include_dirs = [
             get_pybind_include(), # Path to pybind11 headers
