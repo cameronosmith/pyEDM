@@ -19,9 +19,8 @@ pool:
   vmImage: 'ubuntu-16.04'
 steps:
   - script: |
-      chmod +x /io/.ci/build-wheels.sh
       set -ex
-      docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) /io/.ci/build-wheels.sh
+      docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) ./io/.ci/build-wheels.sh
       ls -lh wheelhouse/
       mkdir -p dist
       cp wheelhouse/pyEDM*.whl dist/.
