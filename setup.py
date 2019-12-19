@@ -151,6 +151,9 @@ class BuildExt( build_ext ):
             ext.extra_compile_args = opts
         build_ext.build_extensions(self)
 
+
+on_windows = sys.platform.startswith('win')
+
 #----------------------------------------------------------------------
 #
 #----------------------------------------------------------------------
@@ -168,7 +171,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path, '/usr/lib/', OBLAS_Lib_Path ],
-        libraries    = ['EDM','libopenblas'],
+        libraries    = ['EDM','libopenblas' if on_windows else ""],
     ),
 ]
 
@@ -190,7 +193,7 @@ setup(
     packages         = setuptools.find_packages(), # Enable ./EDM Python module
     ext_modules      = Extension_modules,
     package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py', 
-                                    'win_64_dependencies/*.dll' ] },
+                            'win_64_dependencies/*.dll' if on_windows else ''] },
     #test_suite      = "tests", # ??? [1]
     install_requires = ['pybind11>=2.2', 'pandas>=0.20.3', 'matplotlib>=2.2'],
     python_requires  = '>=3',

@@ -1,17 +1,20 @@
 '''Python interface to cppEDM github.com/SugiharaLab/cppEDM'''
 
-import os
-from ctypes import WinDLL
+import os, sys
 
 dir_path     = os.path.dirname(os.path.realpath(__file__)) + os.path.sep
 dependencies = ["libquadmath-0","libgfortran-3",
                 "libgcc_s_seh-1","libopenblas"]
 
-# load in dependencies dlls
+# load in dependencies dlls if on win
 
-for dependency in dependencies :
+if sys.platform.startswith('win') :
 
-    WinDLL( dir_path+"win_64_dependencies"+os.path.sep+dependency+".dll" )
+    from ctypes import WinDLL
+
+    for dependency in dependencies :
+
+        WinDLL( dir_path+"win_64_dependencies"+os.path.sep+dependency+".dll" )
 
 # export all edm functions
 
