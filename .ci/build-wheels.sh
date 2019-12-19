@@ -7,7 +7,7 @@ pys=(/opt/python/*/bin)
 # Filter out Python 3.4
 pys=(${pys[@]//*34*/})
 
-make -C cppEDM/src
+make -C /io/cppEDM/src
 
 # Compile wheels
 for PYBIN in "${pys[@]}"; do
