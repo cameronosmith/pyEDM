@@ -18,15 +18,15 @@ strategy:
 pool:
   vmImage: 'ubuntu-16.04'
 steps:
-  - script: |
-      set -ex
-      chmod 777 .ci/build-wheels.sh
-      docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) ./io/.ci/build-wheels.sh
-      ls -lh wheelhouse/
-      mkdir -p dist
-      cp wheelhouse/pyEDM*.whl dist/.
-    displayName: Build wheels
-  - template: .ci/azure-publish-dist.yml
+- script: |
+    set -ex
+    chmod 777 .ci/build-wheels.sh
+    docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) ./io/.ci/build-wheels.sh
+    ls -lh wheelhouse/
+    mkdir -p dist
+    cp wheelhouse/pyEDM*.whl dist/.
+  displayName: Build wheels
+- template: .ci/azure-publish-dist.yml
 
 - publish: $(System.DefaultWorkingDirectory)/dist
   artifact: $(plat)
