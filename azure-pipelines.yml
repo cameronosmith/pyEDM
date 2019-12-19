@@ -28,5 +28,5 @@ steps:
     displayName: Build wheels
   - template: .ci/azure-publish-dist.yml
 
-  - publish: $(System.DefaultWorkingDirectory)/dist
-    artifact: $(plat)
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: $(plat)
