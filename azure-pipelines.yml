@@ -1,38 +1,10 @@
 
 strategy:
   matrix:
-    Windows_3.5.4:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_3.5.4_EDM'
-      python.version: '3.5.4'
-    Windows_3.6.8:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_3.6.8_EDM'
-      python.version: '3.6.8'
-    Windows_3.7.4:
-      vmImage: 'vs2017-win2016'
-      build_name: 'Windows_3.7.4_EDM'
-      python.version: '3.7.4'
-    MacOS_2.7.16:
-      vmImage: 'macos-10.13'
-      build_name: 'MacOS_2.7.16_EDM'
-      python.version: '2.7.16'
-    MacOS_3.4.10:
-      vmImage: 'macos-10.13'
-      build_name: 'MacOS_3.4.10_EDM'
-      python.version: '3.4.10'
-    MacOS_3.5.7:
-      vmImage: 'macos-10.13'
-      build_name: 'MacOS_3.5.7_EDM'
-      python.version: '3.5.7'
     MacOS_3.6.9:
       vmImage: 'macos-10.13'
       build_name: 'MacOS_3.6.9_EDM'
       python.version: '3.6.9'
-    MacOS_3.7.4:
-      vmImage: 'macos-10.13'
-      build_name: 'MacOS_3.7.4_EDM'
-      python.version: '3.7.4'
 
 pool:
   vmImage: $(vmImage)
@@ -74,7 +46,7 @@ steps:
 - script: pip install wheel
 - script: python setup.py bdist_wheel
 - script: python setup.py install
-- script: python pyEDM/tests/tests.py
+- script: python test.py
 
 - publish: $(System.DefaultWorkingDirectory)/dist
   condition: eq( variables['Agent.OS'], 'Darwin' )
