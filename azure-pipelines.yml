@@ -1,24 +1,25 @@
 strategy:
   matrix:
-    64Bit2010:
-      arch: x86_64
-      plat: manylinux2010_x86_64
-      image: quay.io/pypa/manylinux2010_x86_64
-      python.architecture: x64
+#    64Bit2010:
+#      arch: x86_64
+#      plat: manylinux2010_x86_64
+#      image: quay.io/pypa/manylinux2010_x86_64
+#      python.architecture: x64
     64Bit:
       arch: x86_64
       plat: manylinux1_x86_64
       image: quay.io/pypa/manylinux1_x86_64
       python.architecture: x64
-    32Bit:
-      arch: i686
-      plat: manylinux1_i686
-      image: quay.io/pypa/manylinux1_i686
-      python.architecture: x86
+#    32Bit:
+#      arch: i686
+#      plat: manylinux1_i686
+#      image: quay.io/pypa/manylinux1_i686
+#      python.architecture: x86
 pool:
   vmImage: 'ubuntu-16.04'
 steps:
   - script: |
+      chmod +x /io/.ci/build-wheels.sh
       set -ex
       docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) /io/.ci/build-wheels.sh
       ls -lh wheelhouse/
