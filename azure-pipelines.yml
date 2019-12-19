@@ -25,4 +25,4 @@ steps:
       mkdir -p dist
       cp wheelhouse/pyEDM*.whl dist/.
     displayName: Build wheels
-  - template: azure-publish-dist.yml
+  - template: .ci/azure-publish-dist.yml
