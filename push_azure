@@ -1,3 +1,0 @@
-git add azure-pipelines.yml setup.py cppEDM/src/makefile cppEDM/src/makefile.windows
-git commit -m "azure pipeline testing"
-git push
