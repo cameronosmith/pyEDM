@@ -26,6 +26,6 @@ done
 
 # Install packages and test
 #for PYBIN in "${pys[@]}"; do
-    #"${PYBIN}/python" -m pip install pyEDM --no-index -f /io/wheelhouse
-    #"${PYBIN}/pytest" /io/tests
+    "${PYBIN}/python" -m pip install pyEDM --no-index -f /io/wheelhouse
+    "${PYBIN}/pytest" /io/tests
 #done
