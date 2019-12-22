@@ -9,13 +9,15 @@ pys=(${pys[@]//*27*/})
 
 make -C /io/cppEDM/src
 
+PYBIN="/opt/python/cp37-cp37m/bin"
+
 # Compile wheels
-for PYBIN in "${pys[@]}"; do
+#for PYBIN in "${pys[@]}"; do
     "${PYBIN}/pip" install -r /io/requirements.txt
-    #"${PYBIN}/pip" wheel /io/ -w wheelhouse/
+    "${PYBIN}/pip" wheel /io/ -w wheelhouse/
     "${PYBIN}/python" /io/setup.py bdist_wheel --dist-dir wheelhouse/
     
-done
+#done
 
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/pyEDM-*.whl; do
@@ -23,7 +25,7 @@ for whl in wheelhouse/pyEDM-*.whl; do
 done
 
 # Install packages and test
-for PYBIN in "${pys[@]}"; do
-    "${PYBIN}/python" -m pip install pyEDM --no-index -f /io/wheelhouse
+#for PYBIN in "${pys[@]}"; do
+    #"${PYBIN}/python" -m pip install pyEDM --no-index -f /io/wheelhouse
     #"${PYBIN}/pytest" /io/tests
-done
+#done
