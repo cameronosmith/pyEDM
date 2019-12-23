@@ -172,7 +172,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path, '/usr/lib/', OBLAS_Lib_Path ],
-        libraries    = ['EDM','libopenblas'] if on_windows else ['EDM'],
+        libraries    = ['EDM','libopenblas'] if on_windows else ['EDM','lapack'],
     ),
 ]
 

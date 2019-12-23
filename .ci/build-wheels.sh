@@ -9,14 +9,15 @@ pys=(${pys[@]//*27*/})
 
 make -C /io/cppEDM/src
 
+yum install -y lapack
+
 PYBIN="/opt/python/cp37-cp37m/bin"
 
 # Compile wheels
 #for PYBIN in "${pys[@]}"; do
     "${PYBIN}/pip" install -r /io/requirements.txt
     "${PYBIN}/pip" wheel /io/ -w wheelhouse/
-    "${PYBIN}/python" /io/setup.py bdist_wheel --dist-dir wheelhouse/
-    
+    #"${PYBIN}/python" /io/setup.py bdist_wheel --dist-dir wheelhouse/
 #done
 
 # Bundle external shared libraries into the wheels
