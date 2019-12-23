@@ -27,5 +27,5 @@ done
 # Install packages and test
 #for PYBIN in "${pys[@]}"; do
     "${PYBIN}/python" -m pip install pyEDM --user --no-index -f /io/wheelhouse
-    echo "import pyEDM" | "${PYBIN}/python"
+    #echo "import pyEDM" | "${PYBIN}/python"
 #done
