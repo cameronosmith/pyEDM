@@ -6,6 +6,8 @@ yum install -y atlas-devel
 
 # Compile wheels
 
+make -C /io/cppEDM/src
+
 
 PYBIN="/opt/python/cp37-cp37m/bin"
 #for PYBIN in /opt/python/*/bin; do
