@@ -2,10 +2,9 @@
 set -e -x
 
 # Install a system package required by our library
-yum install -y lapack
+yum install -y lapack lapack-devel
 
 # Compile wheels
-
 make -C /io/cppEDM/src
 
 
