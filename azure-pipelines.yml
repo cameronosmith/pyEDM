@@ -13,7 +13,7 @@ steps:
 - bash: | 
     mkdir pyEDM/win_64_libs
     curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o pyEDM/win_64_libs/liblapack.lib
-    pip install numpy --user
+    pip install numpy 
     np_path=`echo "import numpy; import os; print(os.path.dirname(numpy.__file__))" | py`
     cp $np_path/.libs/* pyEDM/win_64_libs/
     
