@@ -7,15 +7,7 @@ import os, sys
 
 if sys.platform.startswith('win') :
 
-    from ctypes import WinDLL
-
-    dir_path = os.path.join( os.path.dirname(os.path.realpath(__file__)),
-
-    for dependency in os.listdir( dir_path ) :
-        
-        if not dependency.endswith(".lib"):
-
-            WinDLL( os.path.join( dir_path, dependency ) )
+    import numpy
 
 
 # export all edm functions
