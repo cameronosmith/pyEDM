@@ -8,6 +8,8 @@ strategy:
 pool:
   vmImage: $(vmImage)
 
+steps:
+
 - script: | 
     mkdir pyEDM/win_64_libs
     curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o pyEDM/win_64_libs/liblapack.lib
@@ -15,7 +17,6 @@ pool:
     cp $np_path/.libs/* pyEDM/win_64_libs/
     
 
-#steps:
 #- task: BatchScript@1
 #  inputs:
 #    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
