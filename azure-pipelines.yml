@@ -1,33 +1,29 @@
+
 strategy:
   matrix:
-#    64Bit2010:
-#      arch: x86_64
-#      plat: manylinux2010_x86_64
-#      image: quay.io/pypa/manylinux2010_x86_64
-#      python.architecture: x64
-    64Bit:
-      arch: x86_64
-      plat: manylinux1_x86_64
-      image: quay.io/pypa/manylinux1_x86_64
-      python.architecture: x64
-#    32Bit:
-#      arch: i686
-#      plat: manylinux1_i686
-#      image: quay.io/pypa/manylinux1_i686
-#      python.architecture: x86
-pool:
-  vmImage: 'ubuntu-16.04'
-steps:
-- script: |
-    set -ex
-    chmod 777 .ci/build-wheels.sh
-    docker run -e PLAT=$(plat) -e package_name=pyEDM --rm -v `pwd`:/io $(image) ./io/.ci/build-wheels.sh
-    docker run --rm -e PLAT=$PLAT -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/.ci/build-wheels.sh
-    ls -lh wheelhouse/
-    mkdir -p dist
-    cp wheelhouse/pyEDM*.whl dist/.
-  displayName: Build wheels
-- template: .ci/azure-publish-dist.yml
+    Windows_3.6.8:
+      vmImage: 'vs2017-win2016'
+      build_name: 'Windows_3.6.8_EDM'
 
-- publish: $(System.DefaultWorkingDirectory)/dist
-  artifact: $(plat)
+pool:
+  vmImage: $(vmImage)
+
+- script: | 
+    mkdir pyEDM/win_64_libs
+    curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o pyEDM/win_64_libs/liblapack.lib
+    np_path=`echo "import numpy; import os; print(os.path.dirname(numpy.__file__))" | py`
+    cp $np_path/.libs/* pyEDM/win_64_libs/
+    
+
+#steps:
+#- task: BatchScript@1
+#  inputs:
+#    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+#    arguments: 'amd64'
+#    modifyEnvironment: True 
+#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+#  displayName: setup visual studio env on windows
+
+#- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
+#- script: cl test_blas.cc lapack.lib tmp.lib
+

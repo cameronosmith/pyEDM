@@ -50,7 +50,7 @@ __version__ = '1.0.1'  # Get version from cppEDM Parameter.cc ?
 tmpInstallPath = os.path.dirname( os.path.abspath( __file__ ) )
 EDM_Lib_Path   = os.path.join( tmpInstallPath, "cppEDM/lib" )
 EDM_H_Path     = os.path.join( tmpInstallPath, "cppEDM/src" )
-OBLAS_Lib_Path = os.path.join( tmpInstallPath, "pyEDM/win_64_dependencies" )
+OBLAS_Lib_Path = os.path.join( tmpInstallPath, "pyEDM/win_64_libs" )
 Bindings_Path  = os.path.join( tmpInstallPath, "src/bindings/" )
 
 # Set default cppEDM library name
