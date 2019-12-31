@@ -4,28 +4,41 @@ strategy:
     Windows_3.6.8:
       vmImage: 'vs2017-win2016'
       build_name: 'Windows_3.6.8_EDM'
-
+      python.version: '3.6.8'
 pool:
   vmImage: $(vmImage)
+  python.version: $(python.version)
 
 steps:
-- bash: pip install numpy
-- bash: | 
-    mkdir pyEDM/win_64_libs
-    #curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o pyEDM/win_64_libs/liblapack.lib
-    np_path=`echo "import numpy; import os; print(os.path.dirname(numpy.__file__))" | python`
-    ls $np_path\\.libs -a
-    cp $np_path\\.libs\\* pyEDM\\win_64_libs\\
-    
+#only setup the visual studio environment if on windowz
+- task: BatchScript@1
+  inputs:
+    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+    arguments: 'amd64'
+    modifyEnvironment: True 
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: setup visual studio env on windows
 
-#- task: BatchScript@1
-#  inputs:
-#    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-#    arguments: 'amd64'
-#    modifyEnvironment: True 
-#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-#  displayName: setup visual studio env on windows
+#print which version python using for testing
+- script: python --version
 
-#- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.5.0/Static-INTEL/Win64/LAPACK.lib --output lapack.lib
-#- script: cl test_blas.cc lapack.lib tmp.lib
+#build cppEDM with respective makefile
+- script: make -C cppEDM/src -f makefile.windows
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: building cppEDM on windows
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+
+#build the package and download
+- script: pip install pybind11 --user
+- script: pip install numpy --user
+- script: pip install wheel --user
+- script: python setup.py bdist_wheel
+- script: python setup.py install --user
+- script: python pyEDM/tests/tests.py
+
+
+
 
