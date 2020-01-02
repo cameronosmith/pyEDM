@@ -11,17 +11,17 @@ pool:
 
 steps:
 
-- script: |
+- bash: |
     a=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
     mv distutils.cfg $a
 #only setup the visual studio environment if on windowz
-- task: BatchScript@1
-  inputs:
-    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-    arguments: 'amd64'
-    modifyEnvironment: True 
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: setup visual studio env on windows
+#- task: BatchScript@1
+#  inputs:
+#    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+#    arguments: 'amd64'
+#    modifyEnvironment: True 
+#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+#  displayName: setup visual studio env on windows
 
 #- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o ./cppEDM/lib/liblapack.lib
 
@@ -30,21 +30,21 @@ steps:
 #  displayName: 'Install 64-bit mingw '
 
 #build cppEDM with respective makefile
-- script: make -C cppEDM/src 
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: building cppEDM on windows
+#- script: make -C cppEDM/src 
+#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+#  displayName: building cppEDM on windows
 
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
 
 #build the package and download
-- script: pip install pybind11 --user
-- script: pip install numpy --user
-- script: pip install wheel --user
-- script: mkdir dist
+#- script: pip install pybind11 --user
+#- script: pip install numpy --user
+#- script: pip install wheel --user
+#- script: mkdir dist
 #- script: pip wheel -v -v -v --wheel-dir=dist .
-- script: python setup.py bdist_wheel -c mingw32
+#- script: python setup.py bdist_wheel -c mingw32
 
 
 
