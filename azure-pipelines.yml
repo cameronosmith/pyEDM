@@ -24,8 +24,6 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup visual studio env on windows
 
-#- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o ./cppEDM/lib/liblapack.lib
-
 #- powershell: |
 #    choco install -y mingw --force --version=6.4.0
 #  displayName: 'Install 64-bit mingw '
@@ -46,8 +44,3 @@ steps:
 - script: mkdir dist
 #- script: pip wheel -v -v -v --wheel-dir=dist .
 - script: python setup.py bdist_wheel 
-
-
-
-
-
