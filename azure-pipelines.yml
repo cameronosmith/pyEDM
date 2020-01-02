@@ -21,12 +21,9 @@ steps:
 
 #- script: curl https://icl.cs.utk.edu/lapack-for-windows/libraries/VisualStudio/3.7.0/Dynamic-MINGW/Win64/liblapack.lib -o ./cppEDM/lib/liblapack.lib
 
-- powershell: |
-    choco install -y mingw --force --version=6.4.0
-  displayName: 'Install 64-bit mingw '
-
-#print which version python using for testing
-- script: python --version
+#- powershell: |
+#    choco install -y mingw --force --version=6.4.0
+#  displayName: 'Install 64-bit mingw '
 
 #build cppEDM with respective makefile
 - script: make -C cppEDM/src 
@@ -42,7 +39,8 @@ steps:
 - script: pip install numpy --user
 - script: pip install wheel --user
 - script: mkdir dist
-- script: pip wheel -v -v -v --wheel-dir=dist .
+- script: #pip wheel -v -v -v --wheel-dir=dist .
+- script: python setup.py build -c mingw32
 
 
 

@@ -4,6 +4,9 @@ import setuptools
 from   setuptools import setup, Extension
 from   setuptools.command.build_ext import build_ext
 
+import distutils.cygwinccompiler
+distutils.cygwinccompiler.get_msvcr = lambda: []
+
 __version__ = '1.0.2'  # Get version from cppEDM Parameter.cc ?
 
 # e.g. /tmp/pip-req-build-9ljrp27z/
