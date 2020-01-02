@@ -1,50 +1,10 @@
 #
-# Build the pyEDM Python binding to cppEDM.
-#
-# The core library is the C++ cppEDM libEDM.a
-# NOTE: libEDM.a needs to be built with -fPIC. 
-#
-# Bindings to cppEDM are provided via pybind11 in src/bindings/PyBind.cpp
-# and are built as an Extension module into a platform-specific shared
-# library (EDM_pybind) as defined in Extension_modules(). EDM_pybind
-# bindings return Python dictionaries analogous to the cppEDM and Pandas
-# DataFrame (or nested dictionaries in the case of SMap & Multiview). 
-#
-# The EDM_pybind module is wrapped with the EDM module to convert the
-# Python dictionaries into Pandas DataFrames and provide rudimentary
-# plotting via matplotlib.pyplot.  
-#
-# Most of this setup is cloned from pybind11 example setup.py
-# https://github.com/pybind/python_example
-#
-# This only works if the directory structure for the module to
-# be installed (pyEDM) is:
-#
-# pyEDM/  # Any name
-#   setup.py
-#   pyEDM/
-#     __init__.py # import ./EDM
-#     pyEDM.py
-#     data/
-#     tests/
-#
-# Getting this to work reasonably is just mind-numbing and insensible. 
-# There seem to be many implicit requirements such as the directory 
-# stucture, name conventions, apparent incongruitues between using
-# package_data, MANIFEST.in, etc...
-#
-# Note on the use of setup.py in pip:
-# If the package has a valid wheel, it's installed, perhaps from PyPI.
-# If the package is not a wheel, pip tries to build a wheel for it via
-# "setup.py bdist_wheel". If that fails pip falls back to installing
-# via "setup.py install".
-#
 import sys, os
 import setuptools
 from   setuptools import setup, Extension
 from   setuptools.command.build_ext import build_ext
 
-__version__ = '1.0.1'  # Get version from cppEDM Parameter.cc ?
+__version__ = '1.0.2'  # Get version from cppEDM Parameter.cc ?
 
 # e.g. /tmp/pip-req-build-9ljrp27z/
 tmpInstallPath = os.path.dirname( os.path.abspath( __file__ ) )
@@ -56,10 +16,17 @@ Bindings_Path  = os.path.join( tmpInstallPath, "src/bindings/" )
 platform = sys.platform
 if platform == 'darwin' or platform == 'linux':
     cppLibName = 'libEDM.a'
+    import subprocess
+    build_libEDM = subprocess.Popen(["make", "-C", "./cppEDM/src"], 
+                                           stderr=subprocess.STDOUT)
+    build_libEDM.wait()
+
 elif sys.platform == 'win32':
     cppLibName = 'EDM.lib'
 else: # assume unix
     cppLibName = 'libEDM.a'
+
+cppLibName = "libEDM.a"
 
 # We are building the package, see if libEDM exists
 if not os.path.isfile( os.path.join( EDM_Lib_Path, cppLibName ) ) :
@@ -123,8 +90,9 @@ def cpp_flag( compiler ):
 #----------------------------------------------------------------------
 #
 #----------------------------------------------------------------------
+
+
 class BuildExt( build_ext ):
-    """A custom build extension for adding compiler-specific options."""
     
     c_opts = {
         'msvc': ['/EHsc'],
@@ -170,8 +138,9 @@ Extension_modules = [
         ],
         
         language     = 'c++',
-        library_dirs = [ EDM_Lib_Path,  '/usr/lib64/lapack/', '/usr/lib/lapack' ],
-        libraries    = ['EDM','libopenblas'] if on_windows else ['EDM','lapack'],
+        library_dirs = [ EDM_Lib_Path, '/usr/lib/'],
+        libraries    = ['EDM','openblas','gfortran','pthread','m','quadmath'] if on_windows else ['EDM','lapack'],
+        extra_link_args=["-static", "-static-libgfortran", "-static-libgcc"]
     ),
 ]
 
@@ -192,12 +161,11 @@ setup(
                        'of California.',
     packages         = setuptools.find_packages(), # Enable ./EDM Python module
     ext_modules      = Extension_modules,
-    package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py', 
-                            'win_64_dependencies/*.dll' if on_windows else ''] },
+    package_data     = { 'pyEDM' : ['data/*.csv', 'tests/*.py' ]},
     #test_suite      = "tests", # ??? [1]
     install_requires = ['pybind11>=2.2', 'pandas>=0.20.3', 'matplotlib>=2.2'],
     python_requires  = '>=3',
-    cmdclass         = { 'build_ext' : BuildExt }, # Command/class to build .so
+    #cmdclass         = { 'build_ext' : BuildExt }, # Command/class to build .so
     zip_safe         = False,
 )
 #----------------------------------------------------------------------
