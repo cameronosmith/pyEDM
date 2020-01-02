@@ -142,7 +142,7 @@ Extension_modules = [
         
         language     = 'c++',
         library_dirs = [ EDM_Lib_Path, '/usr/lib/'],
-        extra_compile_args=['-std=c++11'],
+        extra_compile_args=['-std=c++11',"-D_hypot=hypot"],
         libraries    = ['EDM','openblas','gfortran','pthread','m','quadmath'] if on_windows else ['EDM','lapack'],
         extra_link_args=["-static", "-static-libgfortran", "-static-libgcc"]
     ),
