@@ -10,6 +10,10 @@ pool:
   python.version: $(python.version)
 
 steps:
+
+- script: |
+    a=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
+    mv distutils.cfg $a
 #only setup the visual studio environment if on windowz
 - task: BatchScript@1
   inputs:
