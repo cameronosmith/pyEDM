@@ -17,7 +17,7 @@ Bindings_Path  = os.path.join( tmpInstallPath, "src/bindings/" )
 
 # Set default cppEDM library name
 platform = sys.platform
-if platform == 'darwin' or platform == 'linux':
+if True:#platform == 'darwin' or platform == 'linux':
     cppLibName = 'libEDM.a'
     import subprocess
     build_libEDM = subprocess.Popen(["make", "-C", "./cppEDM/src"], 
