@@ -41,5 +41,13 @@ steps:
     pip install -r requirements.txt
     pip install wheel
   displayName: install required python packages
-- script: python setup.py bdist_wheel 
+- script: |
+    mkdir dist
+    pip wheel --wheel-dir=dist
   displayName: build wheels
+
+- script: |
+    pip install dist/pyEDM*.whl
+    python pyEDM/tests/tests.py
+  displayName: run tests
+    
