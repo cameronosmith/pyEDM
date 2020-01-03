@@ -43,7 +43,7 @@ steps:
   displayName: install required python packages
 - script: |
     mkdir dist
-    pip wheel --wheel-dir=dist
+    pip wheel . --wheel-dir=dist
   displayName: build wheels
 
 - script: |
