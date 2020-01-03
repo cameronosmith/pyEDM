@@ -38,7 +38,7 @@ steps:
     versionSpec: '$(python.version)'
 
 - script: |
-    pip install requirements.txt
+    pip install -r requirements.txt
     pip install wheel
   displayName: install required python packages
 - script: python setup.py bdist_wheel 
