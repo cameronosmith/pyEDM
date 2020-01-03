@@ -17,7 +17,7 @@ steps:
     $tmpdir = New-TemporaryFile | %{ rm $_; mkdir $_ }
     Expand-Archive "openblas.zip" $tmpdir
     cp $tmpdir\$(BITS)\lib\libopenblas_v0.3.7-gcc_7_1_0.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib\\libopenblas.a
-displayName: 'Download / Install OpenBLAS'
+  displayName: 'Download / Install OpenBLAS'
 
 - bash: |
     distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
