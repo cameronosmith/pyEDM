@@ -42,5 +42,5 @@ steps:
 - script: pip install numpy --user
 - script: pip install wheel --user
 - script: mkdir dist
-#- script: pip wheel -v -v -v --wheel-dir=dist .
-- script: python setup.py bdist_wheel 
+- script: pip wheel -v --wheel-dir=dist .
+#- script: python setup.py bdist_wheel 
