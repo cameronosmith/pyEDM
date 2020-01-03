@@ -25,12 +25,6 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: setup mingw compiler option for windows build
 
-- bash: |
-    distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
-    mv distutils.cfg $distutils_path
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: setup mingw compiler option for windows build
-
 - task: BatchScript@1
   inputs:
     filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
@@ -43,9 +37,9 @@ steps:
   inputs:
     versionSpec: '$(python.version)'
 
-#- script: |
-#    pip install requirements.txt
-#    pip install wheel
-#  displayName: install required python packages
-#- script: python setup.py bdist_wheel 
-#  displayName: build wheels
+- script: |
+    pip install requirements.txt
+    pip install wheel
+  displayName: install required python packages
+- script: python setup.py bdist_wheel 
+  displayName: build wheels
