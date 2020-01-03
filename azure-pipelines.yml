@@ -47,7 +47,7 @@ steps:
   displayName: build wheels
 
 - script: |
-    pip install dist/pyEDM*.whl
+    pip install $(System.DefaultWorkingDirectory)\\dist\\pyEDM*.whl
     python pyEDM/tests/tests.py
   displayName: run tests
     
