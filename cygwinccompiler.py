@@ -84,7 +84,7 @@ def get_msvcr():
             return ['msvcr100']
         else:
             print("custom vc")
-            return ['vcruntime140']    
+            return ['msvcr100']    
 
 
 class CygwinCCompiler(UnixCCompiler):
