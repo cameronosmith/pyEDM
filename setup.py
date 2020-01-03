@@ -5,7 +5,7 @@ from   setuptools import setup, Extension
 from   setuptools.command.build_ext import build_ext
 
 import distutils.cygwinccompiler
-#distutils.cygwinccompiler.get_msvcr = lambda: []
+distutils.cygwinccompiler.get_msvcr = lambda: ['msvcr100']
 
 __version__ = '1.0.2'  # Get version from cppEDM Parameter.cc ?
 
