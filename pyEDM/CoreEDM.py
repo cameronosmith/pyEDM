@@ -86,6 +86,7 @@ def Simplex( pathIn       = "./",
              knn          = 0,
              tau          = 1,
              exclusionRadius = 0,
+             exclusionMatrix = None,
              columns      = "",
              target       = "", 
              embedded     = False,
@@ -103,7 +104,13 @@ def Simplex( pathIn       = "./",
         DF = pyEDM.AuxFunc.PandasDataFrametoDF( dataFrame )
     else :
         raise Exception( "Simplex(): Invalid data input." )
-    
+
+    # convert exclusion matrix to dataframe
+    if ( exclusionMatrix is None ) :
+        exclusionMatrix = pyBindEDM.DF() 
+    else:
+        exclusionMatrix = pyEDM.AuxFunc.PandasDataFrametoDF( exclusionMatrix, True )
+
     # D is a Python dict from pybind11 < cppEDM Simplex 
     D = pyBindEDM.Simplex( pathIn,
                            dataFile,
@@ -117,6 +124,7 @@ def Simplex( pathIn       = "./",
                            knn,
                            tau,
                            exclusionRadius,
+                           exclusionMatrix,
                            columns,
                            target, 
                            embedded,
@@ -146,6 +154,7 @@ def SMap( pathIn       = "./",
           tau          = 1,
           theta        = 0,
           exclusionRadius = 0,
+          exclusionMatrix = None,
           columns      = "",
           target       = "",
           smapFile     = "",
@@ -165,6 +174,12 @@ def SMap( pathIn       = "./",
         DF = pyEDM.AuxFunc.PandasDataFrametoDF( dataFrame )
     else :
         raise Exception( "SMap(): Invalid data input." )
+
+    # convert exclusion matrix to dataframe
+    if ( exclusionMatrix is None ) :
+        exclusionMatrix = pyBindEDM.DF() 
+    else:
+        exclusionMatrix = pyEDM.AuxFunc.PandasDataFrametoDF( exclusionMatrix, True )
     
     # D is a Python dict from pybind11 < cppEDM SMap:
     #  { "predictions" : {}, "coefficients" : {} }
@@ -181,6 +196,7 @@ def SMap( pathIn       = "./",
                         tau,
                         theta,
                         exclusionRadius,
+                        exclusionMatrix,
                         columns,
                         target,
                         smapFile,
@@ -218,6 +234,7 @@ def Multiview( pathIn          = "./",
                target          = "",
                multiview       = 0,
                exclusionRadius = 0,
+               exclusionMatrix = None,
                verbose         = False,
                numThreads      = 4,
                showPlot        = False ):
@@ -232,6 +249,13 @@ def Multiview( pathIn          = "./",
         DF = pyEDM.AuxFunc.PandasDataFrametoDF( dataFrame )
     else :
         raise Exception( "Multiview(): Invalid data input." )
+
+     # convert exclusion matrix to dataframe
+    if ( exclusionMatrix is None ) :
+        exclusionMatrix = pyBindEDM.DF() 
+    else:
+        exclusionMatrix = pyEDM.AuxFunc.PandasDataFrametoDF( exclusionMatrix, True )
+    
     
     # D is a Python dict from pybind11 < cppEDM Multiview:
     #  { "View" : < vector< string >, "Predictions" : {} }
@@ -250,6 +274,7 @@ def Multiview( pathIn          = "./",
                              target,
                              multiview,
                              exclusionRadius,
+                             exclusionMatrix,
                              verbose,
                              numThreads )
     
