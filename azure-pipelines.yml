@@ -1,4 +1,8 @@
 jobs:
+
+# Only build on Python 3.6
+CIBW_BUILD: cp36-*
+
 - job: linux
   pool: {vmImage: 'Ubuntu-16.04'}
   steps:
