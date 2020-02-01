@@ -16,7 +16,6 @@ py::dict Simplex_pybind( std::string pathIn,
                          int         knn,
                          int         tau,
                          int         exclusionRadius,
-                         DF          exclusionMatrix,
                          std::string columns,
                          std::string target,
                          bool        embedded,
@@ -24,7 +23,6 @@ py::dict Simplex_pybind( std::string pathIn,
                          bool        verbose ) {
 
     DataFrame< double > S;
-    DataFrame<double> exclusionMatrixDF = DFToDataFrame( exclusionMatrix );
     
     if ( dataFile.size() ) {
         // dataFile specified, dispatch overloaded Simplex, ignore df.dataList
@@ -39,7 +37,6 @@ py::dict Simplex_pybind( std::string pathIn,
                      knn,
                      tau,
                      exclusionRadius,
-                     exclusionMatrixDF,
                      columns,
                      target, 
                      embedded,
@@ -59,7 +56,6 @@ py::dict Simplex_pybind( std::string pathIn,
                      knn,
                      tau,
                      exclusionRadius,
-                     exclusionMatrixDF,
                      columns,
                      target, 
                      embedded,

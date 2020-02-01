@@ -20,12 +20,10 @@ std::map< std::string, py::dict > Multiview_pybind (
     std::string  target,
     int          multiview,
     int          exclusionRadius,
-    DF           exclusionMatrix,
     bool         verbose,
     unsigned int numThreads ) {
 
     MultiviewValues MV;
-    DataFrame<double> exclusionMatrixDF = DFToDataFrame( exclusionMatrix );
 
     if ( dataFile.size() ) {
         // dataFile specified, dispatch overloaded Multiview, ignore dataList
@@ -44,7 +42,6 @@ std::map< std::string, py::dict > Multiview_pybind (
                         target,
                         multiview,
                         exclusionRadius,
-                        exclusionMatrixDF,
                         verbose,
                         numThreads );
     }
@@ -64,7 +61,6 @@ std::map< std::string, py::dict > Multiview_pybind (
                         target,
                         multiview,
                         exclusionRadius,
-                        exclusionMatrixDF,
                         verbose,
                         numThreads );
     }

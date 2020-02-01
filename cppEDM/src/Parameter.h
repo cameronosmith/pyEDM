@@ -21,8 +21,6 @@ public:  // Not protected with accessors.
     int         knn;                // k nearest neighbors
     int         tau;                // block embedding delay
     int         exclusionRadius;    // temporal rows to ignore in predict
-
-    const DataFrame<double> &exclusionMatrix;
     
     float       theta;              // S Map localization
     float       SVDSignificance;    // SVD singular value cutoff
@@ -48,7 +46,6 @@ public:  // Not protected with accessors.
     unsigned    seed;             // CCM random selection RNG seed
     
     bool        noNeighborLimit;  // Strictly forbid neighbors outside library
-    bool        forwardTau;       // Embed/block with t+tau instead t-tau
 
     bool        verbose;
     bool        validated;
@@ -83,11 +80,9 @@ public:  // Not protected with accessors.
         int         E           = 0,
         int         Tp          = 0,
         int         knn         = 0,
-        int         tau         = 1,
+        int         tau         = -1,
         float       theta       = 0,
         int         exclusionRadius = 0,
-
-        const DataFrame<double> &exclusionMatrix = DataFrame<double>(),
 
         std::string columns_str = "",
         std::string target_str  = "",
@@ -110,8 +105,7 @@ public:  // Not protected with accessors.
         bool        random       = true,
         bool        replacement  = false,
         unsigned    seed         = 0,   // 0: Generate random seed in CCM
-        bool        noNeighbor   = false,
-        bool        forwardTau   = false
+        bool        noNeighbor   = false
     );
 
     ~Parameters();

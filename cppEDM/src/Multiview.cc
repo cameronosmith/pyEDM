@@ -82,7 +82,6 @@ MultiviewValues Multiview( std::string pathIn,
                            std::string target,
                            int         multiview,
                            int         exclusionRadius,
-                           const DataFrame<double> & exclusionMatrix,
                            bool        verbose,
                            unsigned    nThreads ) {
 
@@ -102,7 +101,6 @@ MultiviewValues Multiview( std::string pathIn,
                                         target,
                                         multiview,
                                         exclusionRadius,
-                                        exclusionMatrix,
                                         verbose,
                                         nThreads );
     return result;
@@ -125,7 +123,6 @@ MultiviewValues  Multiview( DataFrame< double > data,
                             std::string         target,
                             int                 multiview,
                             int                 exclusionRadius,
-                            const DataFrame<double> & exclusionMatrix,
                             bool                verbose,
                             unsigned            nThreads ) {
 
@@ -133,7 +130,7 @@ MultiviewValues  Multiview( DataFrame< double > data,
     Parameters param = Parameters( Method::Simplex, "", "",
                                    pathOut, predictFile,
                                    lib, pred, E, Tp, knn, tau, 0,
-                                   exclusionRadius, exclusionMatrix, columns, target,
+                                   exclusionRadius, columns, target,
                                    true, false, verbose,
                                    "", "", "", 0, 0, 0, multiview );
 
@@ -191,14 +188,14 @@ MultiviewValues  Multiview( DataFrame< double > data,
                                            param.columns_str,
                                            param.verbose );
 
-    size_t shift = std::max( 0, param.tau * (param.E - 1) );
+    size_t shift = abs( param.tau ) * ( param.E - 1 );
     
     // Delete data top rows of partial data
     if ( not data.PartialDataRowsDeleted() ) {
         // Not thread safe
         std::lock_guard<std::mutex> lck( EDM_Multiview::mtx );
         
-        data.DeletePartialDataRows( shift );
+        data.DeletePartialDataRows( shift, param.tau );
     }
         
     // Adjust param.library and param.prediction vectors of indices

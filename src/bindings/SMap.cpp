@@ -17,7 +17,6 @@ std::map< std::string, py::dict > SMap_pybind( std::string pathIn,
                                                int         tau,
                                                double      theta,
                                                int         exclusionRadius,
-                                               DF          exclusionMatrix,
                                                std::string columns,
                                                std::string target,
                                                std::string smapFile,
@@ -26,8 +25,7 @@ std::map< std::string, py::dict > SMap_pybind( std::string pathIn,
                                                bool        const_predcit,
                                                bool        verbose ) {
     SMapValues SM;
-    DataFrame<double> exclusionMatrixDF = DFToDataFrame( exclusionMatrix );
- 
+    
     if ( dataFile.size() ) {
         // dataFile specified, dispatch overloaded SMap, ignore dataList
         
@@ -43,7 +41,6 @@ std::map< std::string, py::dict > SMap_pybind( std::string pathIn,
                    tau,
                    theta,
                    exclusionRadius,
-                   exclusionMatrixDF,
                    columns, 
                    target,
                    smapFile,
@@ -66,7 +63,6 @@ std::map< std::string, py::dict > SMap_pybind( std::string pathIn,
                    tau,
                    theta,
                    exclusionRadius,
-                   exclusionMatrixDF,
                    columns, 
                    target,
                    smapFile,

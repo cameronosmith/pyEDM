@@ -25,7 +25,6 @@ DataFrame<double> Simplex( std::string pathIn,
                            int         knn,
                            int         tau,
                            int         exclusionRadius,
-                           const DataFrame<double> & exclusionMatrix,
                            std::string columns,
                            std::string target,
                            bool        embedded,
@@ -47,7 +46,6 @@ DataFrame<double> Simplex( std::string pathIn,
                                      knn,
                                      tau,
                                      exclusionRadius,
-                                     exclusionMatrix,
                                      columns,
                                      target,
                                      embedded,
@@ -71,7 +69,6 @@ DataFrame<double> Simplex( DataFrame< double > &data,
                            int         knn,
                            int         tau,
                            int         exclusionRadius,
-                           const DataFrame<double> &exclusionMatrix,
                            std::string columns,
                            std::string target,
                            bool        embedded,
@@ -81,7 +78,7 @@ DataFrame<double> Simplex( DataFrame< double > &data,
     Parameters param = Parameters( Method::Simplex, "", "",
                                    pathOut, predictFile,
                                    lib, pred, E, Tp, knn, tau, 0,
-                                   exclusionRadius, exclusionMatrix,
+                                   exclusionRadius,
                                    columns, target, embedded,
                                    const_predict, verbose );
 
@@ -137,13 +134,12 @@ DataFrame<double> SimplexProjection( Parameters  param,
     for ( size_t row = 0; row < N_row; row++ ) {
 
         std::valarray<double> distanceRow = neighbors.distances.Row( row );
-
+        
         // Establish exponential weight reference, the 'distance scale'
         double minDistance = distanceRow.min();
 
         // Compute weight (vector) for each k_NN
         std::valarray<double> weightedDistances( minWeight, param.knn );
-
         
         if ( minDistance == 0 ) {
             // Handle cases of distanceRow = 0 : can't divide by minDistance
@@ -224,6 +220,7 @@ DataFrame<double> SimplexProjection( Parameters  param,
     }
     
 #ifdef DEBUG_ALL
+    std::cout << dataFrame;
     VectorError ve = ComputeError(
         dataFrame.VectorColumnName( "Observations" ),
         dataFrame.VectorColumnName( "Predictions"  ) );
