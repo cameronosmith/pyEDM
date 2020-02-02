@@ -1,6 +1,6 @@
 variables:
     CIBW_BUILD: cp36-*
-    CIBW_BEFORE_BUILD: pip install -r requirements.txt; apt-get install liblapack-dev libblas-dev
+    CIBW_BEFORE_BUILD: yum install liblapack-dev libblas-dev
 
 
 jobs:
@@ -11,7 +11,6 @@ jobs:
     - task: UsePythonVersion@0
     - bash: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
         pip install cibuildwheel==1.1.0
         cibuildwheel --output-dir wheelhouse .
     - task: PublishBuildArtifacts@1
