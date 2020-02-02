@@ -1,6 +1,6 @@
 variables:
     CIBW_BUILD: cp36-*
-    CIBW_BEFORE_BUILD: yum install lapack-devel blas-devel
+    CIBW_BEFORE_BUILD: yum install -y lapack-devel blas-devel; pip install -r requirements.txt
 
 
 jobs:
