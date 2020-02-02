@@ -1,6 +1,6 @@
 variables:
     CIBW_BUILD: cp36-*
-    CIBW_BEFORE_BUILD: yum install liblapack-dev libblas-dev
+    CIBW_BEFORE_BUILD: yum install lapack-devel blas-devel
 
 
 jobs:
