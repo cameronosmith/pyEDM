@@ -27,8 +27,8 @@ steps:
 
 - bash: |
         python -m pip install --upgrade pip
-        pip install cibuildwheel==1.1.0 --user
-        cibuildwheel --output-dir wheelhouse .
+        python -m pip install cibuildwheel==1.1.0 --user
+        python -m cibuildwheel --output-dir wheelhouse .
   displayName: manylinux build
   condition: eq( variables['Agent.OS'], 'Linux' )
 
