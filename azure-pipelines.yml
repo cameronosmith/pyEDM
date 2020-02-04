@@ -28,7 +28,7 @@ strategy:
       vmImage: 'macos-10.13'
       build_name: 'MacOS_3.7_EDM'
       python.version: '3.7'
-   Linux:
+    Linux:
       vmImage: 'Ubuntu-16.04'
       build_name: 'manylinux'
       python.version: '3.7'
