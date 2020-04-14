@@ -5,6 +5,13 @@
 Neighbors:: Neighbors() {}
 Neighbors::~Neighbors() {}
 
+namespace EDM_Neighbors {
+    // Define the initial maximum distance for neigbors to avoid sort()
+    // DBL_MAX is a Macro equivalent to: std::numeric_limits<double>::max()
+    double DistanceMax   = std::numeric_limits<double>::max();
+    double DistanceLimit = std::numeric_limits<double>::max() - 1;
+}
+
 //----------------------------------------------------------------
 // It is assumed that the data frame has only columns of data for
 // which knn will be computed.  The (time) column is not present.
@@ -35,6 +42,10 @@ Neighbors FindNeighbors(
     size_t N_library_rows    = parameters.library.size();
     size_t N_prediction_rows = parameters.prediction.size();
     size_t N_columns         = dataFrame.NColumns();
+    
+    auto max_lib_it = std::max_element( parameters.library.begin(),
+                                        parameters.library.end() );
+    size_t max_lib_index = *max_lib_it;
     
     // Maximum column index.
     // We assume that the dataFrame has been selected to the proper columns
@@ -84,7 +95,7 @@ Neighbors FindNeighbors(
         for ( size_t i = 0; i < parameters.knn; i++ ) {
             k_NN_neighbors[ i ] = 0;
             // JP: Used to avoid sort()
-            k_NN_distances[ i ] = DISTANCE_MAX;
+            k_NN_distances[ i ] = EDM_Neighbors::DistanceMax;
         }
 
         //--------------------------------------------------------------
@@ -117,10 +128,10 @@ Neighbors FindNeighbors(
                 }
             }
                 
-            // If this lib_row + args.Tp >= library_N_row, then this neighbor
+            // If this lib_row + args.Tp >= max_lib_index, then this neighbor
             // would be outside the library, keep looking if noNeighborLimit
             if ( not parameters.noNeighborLimit ) {
-                if ( lib_row + parameters.Tp >= N_library_rows ) {
+                if ( lib_row + parameters.Tp > max_lib_index ) {
                     continue;
                 }
             }
@@ -142,10 +153,13 @@ Neighbors FindNeighbors(
         } // for ( row_j = 0; row_j < library.size(); row_j++ )
         
         if ( *std::max_element( begin( k_NN_distances ),
-                                end  ( k_NN_distances ) ) > DISTANCE_LIMIT ) {
+                                end  ( k_NN_distances ) ) >
+             EDM_Neighbors::DistanceLimit ) {
+            
             std::stringstream errMsg;
-            errMsg << "FindNeighbors(): Library is too small to resolve "
-                   << parameters.knn << " knn neighbors." << std::endl;
+            errMsg << "FindNeighbors(): Failed to find "
+                   << parameters.knn << " knn neighbors. The library "
+                   << "may be too small." << std::endl;
             throw std::runtime_error( errMsg.str() );
         }
 

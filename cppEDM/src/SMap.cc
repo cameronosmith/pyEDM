@@ -6,19 +6,16 @@
 #include "AuxFunc.h"
 
 // forward declarations
-std::valarray < double > SVD( DataFrame    < double > A,
-                              std::valarray< double > B );
-
 std::valarray< double >  Lapack_SVD( int     m,
                                      int     n,
                                      double *a,
                                      double *b,
                                      double  rcond );
 
-//----------------------------------------------------------------
-// Overload 1: Explicit data file path/name
-//   Implemented as a wrapper to API Overload 2:
-//----------------------------------------------------------------
+//---------------------------------------------------------------------
+// Overload 1: Explicit data file path/name with internal SVD (LAPACK)
+//   Implemented as a wrapper to API overload 2 -> 4
+//---------------------------------------------------------------------
 SMapValues SMap( std::string pathIn,
                  std::string dataFile,
                  std::string pathOut,
@@ -41,7 +38,8 @@ SMapValues SMap( std::string pathIn,
 {
     // DataFrame constructor loads data
     DataFrame< double > dataFrameIn( pathIn, dataFile );
-    
+
+    // Call overload 2 with the dataFrameIn
     SMapValues SMapOutput = SMap( dataFrameIn, pathOut, predictFile,
                                   lib, pred, E, Tp, knn, tau, theta,
                                   exclusionRadius,
@@ -51,7 +49,8 @@ SMapValues SMap( std::string pathIn,
 }
 
 //----------------------------------------------------------------
-// Overload 2: DataFrame provided
+// Overload 2: DataFrame provided with internal SVD (LAPACK)
+//    Implemented as a wrapper to API overload 4
 //----------------------------------------------------------------
 SMapValues SMap( DataFrame< double > &data,
                  std::string pathOut,
@@ -68,6 +67,79 @@ SMapValues SMap( DataFrame< double > &data,
                  std::string target,
                  std::string smapFile,
                  std::string derivatives,
+                 bool        embedded,
+                 bool        const_predict,
+                 bool        verbose ) {
+
+    // Call overload 4 with default SVD function (below)
+    SMapValues SMapOutput = SMap( data, pathOut, predictFile,
+                                  lib, pred, E, Tp, knn, tau, theta, 
+                                  exclusionRadius,
+                                  columns, target, smapFile, derivatives,
+                                  &SVD,
+                                  embedded, const_predict, verbose);
+
+    return SMapOutput;
+}
+
+//----------------------------------------------------------------
+// Overload 3: Explicit data file path/name and solver
+//   Implemented as a wrapper to API overload 4
+//----------------------------------------------------------------
+SMapValues SMap( std::string pathIn,
+                 std::string dataFile,
+                 std::string pathOut,
+                 std::string predictFile,
+                 std::string lib,
+                 std::string pred,
+                 int         E,
+                 int         Tp,
+                 int         knn,
+                 int         tau,
+                 double      theta,
+                 int         exclusionRadius,
+                 std::string columns,
+                 std::string target,
+                 std::string smapFile,
+                 std::string derivatives,
+                 std::valarray<double> (*solver) (DataFrame < double >,
+                                                  std::valarray < double > ),
+                 bool        embedded,
+                 bool        const_predict,
+                 bool        verbose )
+{
+    // DataFrame constructor loads data
+    DataFrame< double > dataFrameIn( pathIn, dataFile );
+    
+    // Call overload 4 with dataFrameIn and solver object
+    SMapValues SMapOutput = SMap( dataFrameIn, pathOut, predictFile,
+                                  lib, pred, E, Tp, knn, tau, theta,
+                                  exclusionRadius,
+                                  columns, target, smapFile, derivatives, 
+                                  solver, embedded, const_predict, verbose );
+    return SMapOutput;
+}
+
+//----------------------------------------------------------------
+// Overload 4: Solver & DataFrame provided
+//----------------------------------------------------------------
+SMapValues SMap( DataFrame< double > &data,
+                 std::string pathOut,
+                 std::string predictFile,
+                 std::string lib,
+                 std::string pred,
+                 int         E,
+                 int         Tp,
+                 int         knn,
+                 int         tau,
+                 double      theta,
+                 int         exclusionRadius,
+                 std::string columns,
+                 std::string target,
+                 std::string smapFile,
+                 std::string derivatives,
+                 std::valarray<double> (*solver) (DataFrame < double >,
+                                                  std::valarray < double > ),
                  bool        embedded,
                  bool        const_predict,
                  bool        verbose )
@@ -100,6 +172,10 @@ SMapValues SMap( DataFrame< double > &data,
     size_t predict_N_row = param.prediction.size();
     size_t N_row         = neighbors.neighbors.NRows();
 
+    auto max_lib_it = std::max_element( param.library.begin(),
+                                        param.library.end() );
+    size_t max_lib_index = *max_lib_it;
+    
     if ( predict_N_row != N_row ) {
         std::stringstream errMsg;
         errMsg << "SMap(): Number of prediction rows (" << predict_N_row
@@ -116,6 +192,7 @@ SMapValues SMap( DataFrame< double > &data,
     }
     
     std::valarray< double > predictions = std::valarray< double >( N_row );
+    std::valarray< double > variance    = std::valarray< double >( N_row );
 
     // Init coefficients to NAN ?
     DataFrame< double > coefficients = DataFrame< double >( N_row,
@@ -151,7 +228,7 @@ SMapValues SMap( DataFrame< double > &data,
             lib_row_base = neighbors.neighbors( row, k );
             lib_row      = lib_row_base + param.Tp;
             
-            if ( lib_row > library_N_row ) {
+            if ( lib_row > max_lib_index ) {
                 // The knn index + Tp is outside the library domain
                 // Can only happen if noNeighborLimit = true is used.
                 if ( param.verbose ) {
@@ -186,7 +263,7 @@ SMapValues SMap( DataFrame< double > &data,
         B = w * B; // Weighted target vector
 
         // Estimate linear mapping of predictions A onto target B
-        std::valarray < double > C = SVD( A, B );
+        std::valarray < double > C = solver( A, B );
 
         // Prediction is local linear projection
         double prediction = C[ 0 ]; // C[ 0 ] is the bias term
@@ -199,6 +276,10 @@ SMapValues SMap( DataFrame< double > &data,
         predictions[ row ] = prediction;
         coefficients.WriteRow( row, C );
 
+        // "Variance" estimate assuming weights are probabilities
+        std::valarray< double > deltaSqr = std::pow(target_vec - predictions, 2);
+        variance[ row ] = ( w * deltaSqr ).sum() / w.sum();
+        
     } // for ( row = 0; row < predict_N_row; row++ )
 
     // non "predictions" X(t+1) = X(t) if const_predict specified
@@ -222,6 +303,7 @@ SMapValues SMap( DataFrame< double > &data,
     DataFrame<double> dataOut = FormatOutput( param,
                                               predictions,
                                               const_predictions,
+                                              variance,
                                               target_vec,
                                               dataIn.Time(),
                                               dataIn.TimeName() );
@@ -423,9 +505,9 @@ std::valarray< double > Lapack_SVD( int     m, // number of rows in matrix
     // Copy solution vector in b to C
     std::valarray< double > C( b, N_SingularValues );
 
-    delete s;
-    delete work;
-    delete iwork;
+    delete[] s;
+    delete[] work;
+    delete[] iwork;
     
     return C;
 }

@@ -44,10 +44,10 @@ DataEmbedNN EmbedNN( DataFrame<double> *data,
         // dataIn is a multivariable block, no embedding needed
         // Select the specified columns into dataBlock
         if ( param.columnNames.size() ) {
-            dataBlock = dataIn.DataFrameFromColumnNames(param.columnNames);
+            dataBlock = dataIn.DataFrameFromColumnNames( param.columnNames );
         }
         else if ( param.columnIndex.size() ) {
-            dataBlock = dataIn.DataFrameFromColumnIndex(param.columnIndex);
+            dataBlock = dataIn.DataFrameFromColumnIndex( param.columnIndex );
         }
         else {
             throw std::runtime_error( "EmbedNN(): colNames and "
@@ -82,6 +82,12 @@ DataEmbedNN EmbedNN( DataFrame<double> *data,
     // Adjust param.library and param.prediction indices
     //------------------------------------------------------------
     if ( not param.embedded ) {
+
+        if ( param.E < 1 ) {
+            std::stringstream errMsg;
+            errMsg << "EmbedNN(): E = " << param.E << " is invalid.\n" ;
+            throw std::runtime_error( errMsg.str() );
+        }
         
         size_t shift = abs( param.tau ) * ( param.E - 1 );
 
@@ -143,6 +149,7 @@ DataEmbedNN EmbedNN( DataFrame<double> *data,
 DataFrame<double> FormatOutput( Parameters               param,
                                 std::valarray<double>    predictions,
                                 std::valarray<double>    const_predictions,
+                                std::valarray<double>    variance,
                                 std::valarray<double>    target_vec,
                                 std::vector<std::string> time,
                                 std::string              timeName )
@@ -175,7 +182,7 @@ DataFrame<double> FormatOutput( Parameters               param,
     }
 
     //----------------------------------------------------
-    // Predictions: insert Tp nan at start
+    // Predictions & variance: insert Tp nan at start
     //----------------------------------------------------
     std::valarray<double> predictionsOut( N_row + param.Tp );
     for ( size_t i = 0; i < param.Tp; i++ ) {
@@ -192,19 +199,25 @@ DataFrame<double> FormatOutput( Parameters               param,
             const_predictions;
     }
     
+    std::valarray<double> varianceOut( N_row + param.Tp );
+    for ( size_t i = 0; i < param.Tp; i++ ) {
+        varianceOut[ i ] = NAN;
+    }
+    varianceOut[ std::slice(param.Tp, N_row, 1) ] = variance;
+
     //----------------------------------------------------
     // Create output DataFrame
     //----------------------------------------------------
-    size_t dataFrameColumms = param.const_predict ? 3 : 2;
+    size_t dataFrameColumms = param.const_predict ? 4 : 3;
     
     DataFrame<double> dataFrame( N_row + param.Tp, dataFrameColumms );
     
     if ( param.const_predict ) {
-        dataFrame.ColumnNames() = { "Observations",
-                                    "Predictions", "Const_Predictions" };
+        dataFrame.ColumnNames() = { "Observations", "Predictions", 
+                                    "Pred_Variance", "Const_Predictions" };
     }
     else {
-        dataFrame.ColumnNames() = { "Observations", "Predictions" };
+        dataFrame.ColumnNames() = {"Observations","Predictions","Pred_Variance"};
     }
 
     if ( N_time ) {
@@ -212,11 +225,12 @@ DataFrame<double> FormatOutput( Parameters               param,
         dataFrame.Time()     = timeOut;
     }
     
-    dataFrame.WriteColumn( 0, observations );
+    dataFrame.WriteColumn( 0, observations   );
     dataFrame.WriteColumn( 1, predictionsOut );
+    dataFrame.WriteColumn( 2, varianceOut    );
     
     if ( param.const_predict ) {
-        dataFrame.WriteColumn( 2, constPredictionsOut );
+        dataFrame.WriteColumn( 3, constPredictionsOut );
     }
 
 #ifdef DEBUG_ALL
@@ -333,6 +347,12 @@ void CheckDataRows( Parameters         param,
         shift = 0;
     }
     else {
+        if ( param.E < 1 ) {
+            std::stringstream errMsg;
+            errMsg << "CheckDataRows(): E = " << param.E << " is invalid.\n" ;
+            throw std::runtime_error( errMsg.str() );
+        }
+    
         shift = abs( param.tau ) * ( param.E - 1 );
     }
 

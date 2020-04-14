@@ -107,6 +107,10 @@ DataFrame<double> SimplexProjection( Parameters  param,
     size_t library_N_row = param.library.size();
     size_t N_row         = neighbors.neighbors.NRows();
 
+    auto max_lib_it = std::max_element( param.library.begin(),
+                                        param.library.end() );
+    size_t max_lib_index = *max_lib_it;
+
 #ifdef DEBUG_ALL
     std::cout << "SimplexProjection -------------------------\n";
     std::cout << "Neighbors: (" << neighbors.neighbors.NRows() << "x"
@@ -129,6 +133,7 @@ DataFrame<double> SimplexProjection( Parameters  param,
 
     double minWeight = 1.E-6;
     std::valarray<double> predictions( 0., N_row );
+    std::valarray<double> variance   ( 0., N_row );
 
     // Process each prediction row in neighbors
     for ( size_t row = 0; row < N_row; row++ ) {
@@ -172,7 +177,7 @@ DataFrame<double> SimplexProjection( Parameters  param,
         for ( size_t k = 0; k < param.knn; k++ ) {
             size_t libRow = (size_t) neighbors.neighbors( row, k ) + param.Tp;
 
-            if ( libRow > library_N_row ) {
+            if ( libRow > max_lib_index ) {
                 // The k_NN index + Tp is outside the library domain
                 // Can only happen if noNeighborLimit = true is used.
                 if ( param.verbose ) {
@@ -181,7 +186,7 @@ DataFrame<double> SimplexProjection( Parameters  param,
                         << " exceeds library domain.\n";
                     std::cout << msg.str();
                 }
-                
+
                 // Use the neighbor at the 'base' of the trajectory
                 libTarget[ k ] = target_vec[ libRow - param.Tp ];
             }
@@ -192,7 +197,11 @@ DataFrame<double> SimplexProjection( Parameters  param,
 
         // Prediction is average of weighted library projections
         predictions[ row ] = ( weights * libTarget ).sum() / weights.sum();
-        
+
+        // "Variance" estimate assuming weights are probabilities
+        std::valarray< double > deltaSqr = std::pow(libTarget - predictions, 2);
+        variance[ row ] = ( weights * deltaSqr ).sum() / weights.sum();
+
     } // for ( row = 0; row < N_row; row++ )
 
     // non "predictions" X(t+1) = X(t) if const_predict specified
@@ -203,13 +212,14 @@ DataFrame<double> SimplexProjection( Parameters  param,
         
         const_predictions = target_vec[ pred_slice ];
     }
-    
+
     //----------------------------------------------------
     // Ouput
     //----------------------------------------------------
     DataFrame<double> dataFrame = FormatOutput( param,
                                                 predictions,
                                                 const_predictions,
+                                                variance,
                                                 target_vec,
                                                 dataIn->Time(),
                                                 dataIn->TimeName() );
@@ -218,7 +228,7 @@ DataFrame<double> SimplexProjection( Parameters  param,
         // Write to disk
         dataFrame.WriteData( param.pathOut, param.predictOutputFile );
     }
-    
+
 #ifdef DEBUG_ALL
     std::cout << dataFrame;
     VectorError ve = ComputeError(
@@ -229,6 +239,6 @@ DataFrame<double> SimplexProjection( Parameters  param,
               << "  MAE " << ve.MAE << std::endl;
     std::cout << "-------------------------------------------\n";
 #endif
-    
+
     return dataFrame;
 }
