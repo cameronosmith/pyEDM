@@ -21,12 +21,17 @@ steps:
     versionSpec: '$(python.version)'
 
 - bash: |
-    mkdir tmp
-    unzstd b
+    distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
+    echo $'[build]\ncompiler=mingw32' > $distutils_path/distutils.cfg
+  displayName: setup mingw compiler option for windows build
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
 
-  displayName: cloud building is worst
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-- bash: |
-    pacman -S b 
-  displayName: pacman test1
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+- script: |
+    pip install -r requirements.txt
+    pip install --upgrade wheel
+    pip install --upgrade setuptools
+  displayName: install required python modules for pyEDM build
+
+- script: python setup.py bdist_wheel
+  displayName: build pyEDM wheel
+  condition: ne( variables['Agent.OS'], 'Linux' )
