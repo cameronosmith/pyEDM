@@ -240,7 +240,8 @@ def Multiview( pathIn          = "./",
                predictFile     = "",
                lib             = "",
                pred            = "",
-               E               = 0, 
+               D               = 0, 
+               E               = 1, 
                Tp              = 1,
                knn             = 0,
                tau             = -1,
@@ -248,6 +249,7 @@ def Multiview( pathIn          = "./",
                target          = "",
                multiview       = 0,
                exclusionRadius = 0,
+               trainLib        = True,
                verbose         = False,
                numThreads      = 4,
                showPlot        = False ):
@@ -280,6 +282,7 @@ def Multiview( pathIn          = "./",
                              predictFile,
                              lib,
                              pred,
+                             D, 
                              E, 
                              Tp,
                              knn,
@@ -288,6 +291,7 @@ def Multiview( pathIn          = "./",
                              target,
                              multiview,
                              exclusionRadius,
+                             trainLib,
                              verbose,
                              numThreads )
     
@@ -320,11 +324,10 @@ def CCM( pathIn       = "./",
          random       = True,
          replacement  = False,
          seed         = 0,
+         includeData  = False,
          verbose      = False,
-         showPlot     = False,
-         returnVerbose= False):
+         showPlot     = False ) :
     '''Convergent Cross Mapping on path/file.'''
-
 
     # Establish DF as empty list or Pandas DataFrame for CCM()
     if dataFile :
@@ -357,22 +360,33 @@ def CCM( pathIn       = "./",
                        random,
                        replacement,
                        seed,
+                       includeData,
                        verbose )
-    df = DataFrame(D[0])
 
-    crossMaps = [(DataFrame(predStats), list(map(DataFrame,predDicts)))
-                    for predStats, predDicts in D[1:]]
+    # D has { "LibMeans" : DF }
+    # and if includeData has : { PredictStats1 : DF, PredictStats2 : DF }
+    libMeans = DataFrame( D[ "LibMeans" ] ) # Convert to pandas DataFrame
 
+    # If includeData, create dict with means and individual prediction stats
+    if includeData:
+        CM = { 'LibMeans'      : libMeans,
+               'PredictStats1' : DataFrame( D[ "PredictStats1" ] ),
+               'PredictStats2' : DataFrame( D[ "PredictStats2" ] ) }
+    
     if showPlot :
         title = dataFile + "\nE=" + str(E)
     
-        ax = df.plot( 'LibSize', [ df.columns[1], df.columns[2] ],
-                      title = title, linewidth = 3 )
+        ax = libMeans.plot( 'LibSize',
+                            [ libMeans.columns[1], libMeans.columns[2] ],
+                            title = title, linewidth = 3 )
         ax.set( xlabel = "Library Size", ylabel = "Correlation ρ" )
         axhline( y = 0, linewidth = 1 )
         show()
-    
-    return [df,crossMaps[0],crossMaps[1]] if returnVerbose else df
+
+    if includeData :
+        return CM
+    else :
+        return libMeans
 
 #------------------------------------------------------------------------
 #
@@ -482,7 +496,7 @@ def PredictInterval( pathIn       = "./",
     if pyEDM.AuxFunc.NotStringIterable( columns ) :
         columns = ' '.join( map( str,columns   ) )
     
-   # D is a Python dict from pybind11 < cppEDM PredictInterval
+    # D is a Python dict from pybind11 < cppEDM PredictInterval
     D = pyBindEDM.PredictInterval( pathIn,
                                    dataFile,
                                    DF,

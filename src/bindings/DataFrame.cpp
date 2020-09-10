@@ -60,7 +60,6 @@ DF DataFrameToDF( DataFrame< double > dataFrame ) {
         df.dataList.push_back( std::make_pair( colName, colData ) );
     }
 
-
     // If no columns names, create column indices
     if ( not dataFrame.ColumnNames().size() ) {
         for ( size_t colidx = 0; colidx < dataFrame.NColumns(); colidx++ ) {
@@ -71,7 +70,6 @@ DF DataFrameToDF( DataFrame< double > dataFrame ) {
                                                    colData ) );
         }
     }
-
 
     return df;
 }
