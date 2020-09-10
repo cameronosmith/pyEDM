@@ -84,8 +84,8 @@ steps:
 # took this from the scipy azure build script so credit to them in case needed
 # JP This hardcoded link to openblas is a problem.  Seems it's gone...
 - powershell: |
-    cp $(System.DefaultWorkingDirectory)\\garbage_os_binary\\libopenblas.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib
-  displayName: 'download openblas'
+    cp $(System.DefaultWorkingDirectory)\\pyEDM\\etc\\windows\\libopenblas.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib
+  displayName: 'move window openblas binary'
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
 
 - bash: |
