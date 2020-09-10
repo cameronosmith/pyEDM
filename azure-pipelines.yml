@@ -21,7 +21,7 @@ steps:
     versionSpec: '$(python.version)'
 
 - bash: |
-    git clone https://github.com/xianyi/OpenBLAS
+    git clone https://github.com/xianyi/OpenBLAS .
     make
     ls
   displayName: cloud building is worst
