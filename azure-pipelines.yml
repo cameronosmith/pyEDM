@@ -22,9 +22,11 @@ steps:
 
 - bash: |
     mkdir tmp
-    git clone https://github.com/xianyi/OpenBLAS tmp
-    cd tmp
-    make
-    ls
+    unzstd b
+
   displayName: cloud building is worst
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+- bash: |
+    pacman -S b 
+  displayName: pacman test1
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
