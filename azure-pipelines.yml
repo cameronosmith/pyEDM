@@ -4,10 +4,50 @@ variables:
 
 strategy:
   matrix:
+#    Windows_3.6:
+#      vmImage: 'vs2017-win2016'
+#      build_name: 'Windows_3.6_EDM'
+#      python.version: '3.6'
+#    Windows_3.7:
+#      vmImage: 'vs2017-win2016'
+#      build_name: 'Windows_3.7_EDM'
+#      python.version: '3.7'
     Windows_3.8:
       vmImage: 'vs2017-win2016'
       build_name: 'Windows_3.8_EDM'
       python.version: '3.8'
+#    Windows_3.8_2019:
+#      vmImage: 'windows-2019'
+#      build_name: 'Windows_2019_3.8_EDM'
+#      python.version: '3.8'
+#    MacOS_3.5:
+#      vmImage: 'macos-latest'
+#      build_name: 'MacOS_3.5_EDM'
+#      python.version: '3.5'
+#    MacOS_3.6:
+#      vmImage: 'macos-latest'
+#      build_name: 'MacOS_3.6.9_EDM'
+#      python.version: '3.6'
+#    MacOS_3.7:
+#      vmImage: 'macos-latest'
+#      build_name: 'MacOS_3.7_EDM'
+#      python.version: '3.7'
+#    MacOS_3.8:
+#      vmImage: 'macos-latest'
+#      build_name: 'MacOS_3.8_EDM'
+#      python.version: '3.8'
+#    Linux_3.6:
+#      vmImage: 'ubuntu-latest'
+#      build_name: 'manylinux36'
+#      python.version: '3.6'
+#    Linux_3.7:
+#      vmImage: 'ubuntu-latest'
+#      build_name: 'manylinux37'
+#      python.version: '3.7'
+#    Linux_3.8:
+#      vmImage: 'ubuntu-latest'
+#      build_name: 'manylinux38'
+#      python.version: '3.8'
 
 pool:
 
@@ -44,10 +84,31 @@ steps:
 # took this from the scipy azure build script so credit to them in case needed
 # JP This hardcoded link to openblas is a problem.  Seems it's gone...
 - powershell: |
-    $wc = New-Object net.webclient;
-    $wc.Downloadfile("https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-openblas-0.3.10-2-any.pkg.tar.zst", "openblas.tar.zst")
-    $tmpdir = New-TemporaryFile | %{ rm $_; mkdir $_ }
-    Expand-Archive "openblas.tar.zst" $tmpdir
-    cp $tmpdir\64\lib\libopenblas_v0.3.7-gcc_7_1_0.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib\\libopenblas.a
+    cp $(System.DefaultWorkingDirectory)\\garbage_os_binary\\libopenblas.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib
   displayName: 'download openblas'
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
+
+- bash: |
+    distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
+    echo $'[build]\ncompiler=mingw32' > $distutils_path/distutils.cfg
+  displayName: setup mingw compiler option for windows build
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+
+- script: |
+    pip install -r requirements.txt
+    pip install --upgrade wheel
+    pip install --upgrade setuptools
+  displayName: install required python modules for pyEDM build
+
+- script: python setup.py bdist_wheel
+  displayName: build pyEDM wheel
+  condition: ne( variables['Agent.OS'], 'Linux' )
+
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: $(build_name)
+  condition: ne( variables['Agent.OS'], 'Linux' )
+
+- task: PublishBuildArtifacts@1
+  inputs: {pathtoPublish: 'wheelhouse'}
+  condition: eq( variables['Agent.OS'], 'Linux' )
+
