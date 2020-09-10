@@ -47,7 +47,7 @@ steps:
     $wc = New-Object net.webclient;
     $wc.Downloadfile("https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-openblas-0.3.10-2-any.pkg.tar.zst", "openblas.tar.zst")
     $tmpdir = New-TemporaryFile | %{ rm $_; mkdir $_ }
-    Expand-Archive "openblas.zip" $tmpdir
+    Expand-Archive "openblas.tar.zst" $tmpdir
     cp $tmpdir\64\lib\libopenblas_v0.3.7-gcc_7_1_0.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib\\libopenblas.a
   displayName: 'download openblas'
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
