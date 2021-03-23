@@ -1,5 +1,5 @@
 variables:
-    CIBW_BUILD: cp38-* cp39-*
+    CIBW_BUILD: cp39-*
     CIBW_BEFORE_BUILD: yum install -y lapack-devel libpng-devel freetype-devel freetype blas-devel pkg-config; pip install -r requirements.txt; 
 
 strategy:
@@ -48,10 +48,10 @@ strategy:
 #      vmImage: 'ubuntu-latest'
 #      build_name: 'manylinux38'
 #      python.version: '3.8'
-    Linux_3.8:
-      vmImage: 'ubuntu-latest'
-      build_name: 'manylinux38'
-      python.version: '3.8'
+#   Linux_3.8:
+#     vmImage: 'ubuntu-latest'
+#     build_name: 'manylinux38'
+#     python.version: '3.8'
     Linux_3.9:
       vmImage: 'ubuntu-latest'
       build_name: 'manylinux39'
