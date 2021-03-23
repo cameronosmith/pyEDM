@@ -7,11 +7,9 @@ jobs:
 - job:
 
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-latest'
   strategy:
     matrix:
-      Python36:
-        python.version: '3.8'
       Python37:
         python.version: '3.9'
 
@@ -23,12 +21,12 @@ jobs:
 
   - script: |
       python -m pip install cibuildwheel==1.10.0
-      pip install -r requirements.txt
-      pip install --upgrade wheel
-      pip install --upgrade setuptools
+      python -m pip install -r requirements.txt
+      python -m pip install --upgrade wheel
+      python -m pip install --upgrade setuptools
       python -m cibuildwheel --output-dir wheelhouse
     displayName: install required python modules for pyEDM build
 
-  - script: tox -e py
-    displayName: 'Run Tox'
+  - task: PublishBuildArtifacts@1
+    inputs: {pathtoPublish: 'wheelhouse'}
 
