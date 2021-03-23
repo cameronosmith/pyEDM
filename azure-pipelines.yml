@@ -118,4 +118,4 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs: {pathtoPublish: 'wheelhouse'}
-  condition: eq( variables['Agent.OS'], 'Linux' )
+    #condition: eq( variables['Agent.OS'], 'Linux' )
