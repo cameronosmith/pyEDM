@@ -110,7 +110,7 @@ steps:
 
 - script: python setup.py bdist_wheel
   displayName: build pyEDM wheel
-  condition: ne( variables['Agent.OS'], 'Linux' )
+    #condition: ne( variables['Agent.OS'], 'Linux' )
 
 - publish: $(System.DefaultWorkingDirectory)/dist
   artifact: $(build_name)
@@ -119,4 +119,3 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs: {pathtoPublish: 'wheelhouse'}
   condition: eq( variables['Agent.OS'], 'Linux' )
-
