@@ -1,136 +1,27 @@
-variables:
-    CIBW_BUILD: cp38-* cp39-*
-    CIBW_BEFORE_BUILD: yum install -y lapack-devel libpng-devel freetype-devel freetype blas-devel pkg-config; pip install -r requirements.txt; 
+- job:
 
-strategy:
-  matrix:
-#    Windows_3.6:
-#      vmImage: 'vs2017-win2016'
-#      build_name: 'Windows_3.6_EDM'
-#      python.version: '3.6'
-#    Windows_3.7:
-#      vmImage: 'vs2017-win2016'
-#      build_name: 'Windows_3.7_EDM'
-#      python.version: '3.7'
-#   Windows_3.8:
-#     vmImage: 'vs2017-win2016'
-#     build_name: 'Windows_3.8_EDM'
-#     python.version: '3.8'
-#    Windows_3.8_2019:
-#      vmImage: 'windows-2019'
-#      build_name: 'Windows_2019_3.8_EDM'
-#      python.version: '3.8'
-#    MacOS_3.5:
-#      vmImage: 'macos-latest'
-#      build_name: 'MacOS_3.5_EDM'
-#      python.version: '3.5'
-#    MacOS_3.6:
-#      vmImage: 'macos-latest'
-#      build_name: 'MacOS_3.6.9_EDM'
-#      python.version: '3.6'
-#    MacOS_3.7:
-#      vmImage: 'macos-latest'
-#      build_name: 'MacOS_3.7_EDM'
-#      python.version: '3.7'
-#    MacOS_3.8:
-#      vmImage: 'macos-latest'
-#      build_name: 'MacOS_3.8_EDM'
-#      python.version: '3.8'
-#    Linux_3.6:
-#      vmImage: 'ubuntu-latest'
-#      build_name: 'manylinux36'
-#      python.version: '3.6'
-#    Linux_3.7:
-#      vmImage: 'ubuntu-latest'
-#      build_name: 'manylinux37'
-#      python.version: '3.7'
-#    Linux_3.8:
-#      vmImage: 'ubuntu-latest'
-#      build_name: 'manylinux38'
-#      python.version: '3.8'
-   Linux_3.8:
-     vmImage: 'ubuntu-latest'
-     build_name: 'manylinux38'
-     python.version: '3.8'
-   #Linux_3.9:
-   #  vmImage: 'ubuntu-latest'
-   #  build_name: 'manylinux39'
-   #  python.version: '3.9'
-
-pool:
-
-  vmImage: $(vmImage)
-  python.version: $(python.version)
+  pool:
+    vmImage: 'ubuntu-16.04'
+  strategy:
+    matrix:
+      Python27:
+        python.version: '2.7'
+      Python35:
+        python.version: '3.5'
+      Python36:
+        python.version: '3.6'
+      Python37:
+        python.version: '3.7'
 
   steps:
   - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
     inputs:
       versionSpec: '$(python.version)'
-  - script: |
-      pip install -r requirements.txt
-      pip install --upgrade wheel
-      pip install --upgrade setuptools
-      python -m cibuildwheel --output-dir wheelhouse
-    displayName: install required python modules for pyEDM build
-  
-  - task: PublishBuildArtifacts@1
-    inputs: {pathtoPublish: 'wheelhouse'}
 
+  - script: pip install tox
+    displayName: 'Install Tox'
 
-    #steps:
-    #
-    #- task: UsePythonVersion@0
-    #  inputs:
-    #    versionSpec: '$(python.version)'
-    #
-    #- bash: |
-    #    pyconf_path=`echo "from sysconfig import get_paths;print(get_paths()['include'])"|python`
-    #    sed -i '/#define hypot _hypot/d' $pyconf_path/pyconfig.h
-    #  displayName: remove conflicting hypot bug in pyconf
-    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    #
-    #- bash: |
-    #        python -m pip install --upgrade pip
-    #        python -m pip install cibuildwheel==1.10.0 --user
-    #        python -m cibuildwheel --output-dir wheelhouse .
-    #  displayName: manylinux build
-    #  condition: eq( variables['Agent.OS'], 'Linux' )
-    #
-    #- task: BatchScript@1
-    #  inputs:
-    #    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-    #    arguments: 'amd64'
-    #    modifyEnvironment: True 
-    #  displayName: setup visual studio env on windows
-    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    #
-    ## took this from the scipy azure build script so credit to them in case needed
-    ## JP This hardcoded link to openblas is a problem.  Seems it's gone...
-    #- powershell: |
-    #    cp $(System.DefaultWorkingDirectory)\\pyEDM\\etc\\windows\\libopenblas.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib
-    #  displayName: 'move window openblas binary'
-    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    #
-    #- bash: |
-    #    distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
-    #    echo $'[build]\ncompiler=mingw32' > $distutils_path/distutils.cfg
-    #  displayName: setup mingw compiler option for windows build
-    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    #
-    #- script: |
-    #    pip install -r requirements.txt
-    #    pip install --upgrade wheel
-    #    pip install --upgrade setuptools
-    #  displayName: install required python modules for pyEDM build
-    #
-    #- script: python setup.py bdist_wheel
-    #  displayName: build pyEDM wheel
-    #    #condition: ne( variables['Agent.OS'], 'Linux' )
-    #
-    #- publish: $(System.DefaultWorkingDirectory)/dist
-    #  artifact: $(build_name)
-    #    #condition: ne( variables['Agent.OS'], 'Linux' )
-    #
-    #- task: PublishBuildArtifacts@1
-    #  inputs: {pathtoPublish: 'wheelhouse'}
-    #    #condition: eq( variables['Agent.OS'], 'Linux' )
+  - script: tox -e py
+    displayName: 'Run Tox'
+
