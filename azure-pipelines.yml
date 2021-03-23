@@ -29,6 +29,5 @@ jobs:
       python -m cibuildwheel --output-dir wheelhouse
     displayName: install required python modules for pyEDM build
 
-  - script: tox -e py
-    displayName: 'Run Tox'
-
+    - task: PublishBuildArtifacts@1
+      inputs: {pathtoPublish: 'wheelhouse'}
