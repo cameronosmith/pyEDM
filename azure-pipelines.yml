@@ -1,8 +1,7 @@
 
 variables:
     CIBW_BUILD: cp38-* cp39-*
-    CIBW_BEFORE_BUILD: apt-get install -y lapack-devel libpng-devel freetype-devel freetype blas-devel pkg-config libatlas-base-dev gfortran 
- libblas-dev liblapack-dev; pip install -r requirements.txt;
+    CIBW_BEFORE_BUILD: apt-get install -y lapack-devel libpng-devel freetype-devel freetype blas-devel pkg-config libatlas-base-dev gfortran libblas-dev liblapack-dev; pip install -r requirements.txt;
 
 jobs:
 - job:
