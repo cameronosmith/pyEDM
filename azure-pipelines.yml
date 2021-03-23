@@ -34,8 +34,8 @@ steps:
   displayName: manylinux build
   condition: eq( variables['Agent.OS'], 'Linux' )
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: 'wheelhouse'
-      artifactName: MyBuildOutputs
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'wheelhouse'
+    artifactName: MyBuildOutputs
 
