@@ -52,31 +52,30 @@ strategy:
      vmImage: 'ubuntu-latest'
      build_name: 'manylinux38'
      python.version: '3.8'
-    Linux_3.9:
-      vmImage: 'ubuntu-latest'
-      build_name: 'manylinux39'
-      python.version: '3.9'
+   #Linux_3.9:
+   #  vmImage: 'ubuntu-latest'
+   #  build_name: 'manylinux39'
+   #  python.version: '3.9'
 
 pool:
 
   vmImage: $(vmImage)
   python.version: $(python.version)
 
-
   steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(python.version)'
-    - bash: |
-        python -m pip install cibuildwheel==1.10.0
-        pip install -r requirements.txt
-        pip install --upgrade wheel
-        pip install --upgrade setuptools
-        python -m cibuildwheel --output-dir wheelhouse
-      displayName: install required python modules for pyEDM build
-    
-    - task: PublishBuildArtifacts@1
-      inputs: {pathtoPublish: 'wheelhouse'}
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+  - bash: |
+      python -m pip install cibuildwheel==1.10.0
+      pip install -r requirements.txt
+      pip install --upgrade wheel
+      pip install --upgrade setuptools
+      python -m cibuildwheel --output-dir wheelhouse
+    displayName: install required python modules for pyEDM build
+  
+  - task: PublishBuildArtifacts@1
+    inputs: {pathtoPublish: 'wheelhouse'}
 
 
     #steps:
