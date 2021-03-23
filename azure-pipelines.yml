@@ -48,10 +48,10 @@ strategy:
 #      vmImage: 'ubuntu-latest'
 #      build_name: 'manylinux38'
 #      python.version: '3.8'
-#   Linux_3.8:
-#     vmImage: 'ubuntu-latest'
-#     build_name: 'manylinux38'
-#     python.version: '3.8'
+   Linux_3.8:
+     vmImage: 'ubuntu-latest'
+     build_name: 'manylinux38'
+     python.version: '3.8'
     Linux_3.9:
       vmImage: 'ubuntu-latest'
       build_name: 'manylinux39'
