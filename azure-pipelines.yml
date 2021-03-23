@@ -23,12 +23,12 @@ jobs:
 
   - script: |
       python -m pip install cibuildwheel==1.10.0
-      python -m pip install -r requirements.txt
-      python -m pip install --upgrade wheel
-      python -m pip install --upgrade setuptools
+      pip install -r requirements.txt
+      pip install --upgrade wheel
+      pip install --upgrade setuptools
       python -m cibuildwheel --output-dir wheelhouse
     displayName: install required python modules for pyEDM build
 
-  - task: PublishBuildArtifacts@1
-    inputs: {pathtoPublish: 'wheelhouse'}
+  - script: tox -e py
+    displayName: 'Run Tox'
 
