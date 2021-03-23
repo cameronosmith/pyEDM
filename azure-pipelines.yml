@@ -114,7 +114,7 @@ steps:
 
 - publish: $(System.DefaultWorkingDirectory)/dist
   artifact: $(build_name)
-  condition: ne( variables['Agent.OS'], 'Linux' )
+    #condition: ne( variables['Agent.OS'], 'Linux' )
 
 - task: PublishBuildArtifacts@1
   inputs: {pathtoPublish: 'wheelhouse'}
