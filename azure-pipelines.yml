@@ -30,4 +30,6 @@ jobs:
     displayName: install required python modules for pyEDM build
 
   - task: PublishBuildArtifacts@1
-      inputs: {pathtoPublish: 'wheelhouse'}
+      displayName: 'publichs '
+      inputs: 
+        pathtoPublish: 'wheelhouse'
