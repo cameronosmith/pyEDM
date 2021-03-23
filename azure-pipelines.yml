@@ -62,60 +62,81 @@ pool:
   vmImage: $(vmImage)
   python.version: $(python.version)
 
-steps:
 
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
+  steps:
+    - uses: actions/checkout@v2
 
-- bash: |
-    pyconf_path=`echo "from sysconfig import get_paths;print(get_paths()['include'])"|python`
-    sed -i '/#define hypot _hypot/d' $pyconf_path/pyconfig.h
-  displayName: remove conflicting hypot bug in pyconf
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+      # Used to host cibuildwheel
+    - uses: actions/setup-python@v2
 
-- bash: |
-        python -m pip install --upgrade pip
-        python -m pip install cibuildwheel==1.10.0 --user
-        python -m cibuildwheel --output-dir wheelhouse .
-  displayName: manylinux build
-  condition: eq( variables['Agent.OS'], 'Linux' )
+    - name: Install cibuildwheel
+      run: python -m pip install cibuildwheel==1.10.0
 
-- task: BatchScript@1
-  inputs:
-    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-    arguments: 'amd64'
-    modifyEnvironment: True 
-  displayName: setup visual studio env on windows
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    - name: Build wheels
+      run: python -m cibuildwheel --output-dir wheelhouse
+        # to supply options, put them in 'env', like:
+        # env:
+        #   CIBW_SOME_OPTION: value
 
-# took this from the scipy azure build script so credit to them in case needed
-# JP This hardcoded link to openblas is a problem.  Seems it's gone...
-- powershell: |
-    cp $(System.DefaultWorkingDirectory)\\pyEDM\\etc\\windows\\libopenblas.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib
-  displayName: 'move window openblas binary'
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./wheelhouse/*.whl
 
-- bash: |
-    distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
-    echo $'[build]\ncompiler=mingw32' > $distutils_path/distutils.cfg
-  displayName: setup mingw compiler option for windows build
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
 
-- script: |
-    pip install -r requirements.txt
-    pip install --upgrade wheel
-    pip install --upgrade setuptools
-  displayName: install required python modules for pyEDM build
-
-- script: python setup.py bdist_wheel
-  displayName: build pyEDM wheel
-    #condition: ne( variables['Agent.OS'], 'Linux' )
-
-- publish: $(System.DefaultWorkingDirectory)/dist
-  artifact: $(build_name)
-    #condition: ne( variables['Agent.OS'], 'Linux' )
-
-- task: PublishBuildArtifacts@1
-  inputs: {pathtoPublish: 'wheelhouse'}
-    #condition: eq( variables['Agent.OS'], 'Linux' )
+    #steps:
+    #
+    #- task: UsePythonVersion@0
+    #  inputs:
+    #    versionSpec: '$(python.version)'
+    #
+    #- bash: |
+    #    pyconf_path=`echo "from sysconfig import get_paths;print(get_paths()['include'])"|python`
+    #    sed -i '/#define hypot _hypot/d' $pyconf_path/pyconfig.h
+    #  displayName: remove conflicting hypot bug in pyconf
+    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    #
+    #- bash: |
+    #        python -m pip install --upgrade pip
+    #        python -m pip install cibuildwheel==1.10.0 --user
+    #        python -m cibuildwheel --output-dir wheelhouse .
+    #  displayName: manylinux build
+    #  condition: eq( variables['Agent.OS'], 'Linux' )
+    #
+    #- task: BatchScript@1
+    #  inputs:
+    #    filename: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+    #    arguments: 'amd64'
+    #    modifyEnvironment: True 
+    #  displayName: setup visual studio env on windows
+    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    #
+    ## took this from the scipy azure build script so credit to them in case needed
+    ## JP This hardcoded link to openblas is a problem.  Seems it's gone...
+    #- powershell: |
+    #    cp $(System.DefaultWorkingDirectory)\\pyEDM\\etc\\windows\\libopenblas.a $(System.DefaultWorkingDirectory)\\cppEDM\\lib
+    #  displayName: 'move window openblas binary'
+    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    #
+    #- bash: |
+    #    distutils_path=`echo "import distutils,os;print(os.path.dirname(distutils.__file__))"|python`
+    #    echo $'[build]\ncompiler=mingw32' > $distutils_path/distutils.cfg
+    #  displayName: setup mingw compiler option for windows build
+    #  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    #
+    #- script: |
+    #    pip install -r requirements.txt
+    #    pip install --upgrade wheel
+    #    pip install --upgrade setuptools
+    #  displayName: install required python modules for pyEDM build
+    #
+    #- script: python setup.py bdist_wheel
+    #  displayName: build pyEDM wheel
+    #    #condition: ne( variables['Agent.OS'], 'Linux' )
+    #
+    #- publish: $(System.DefaultWorkingDirectory)/dist
+    #  artifact: $(build_name)
+    #    #condition: ne( variables['Agent.OS'], 'Linux' )
+    #
+    #- task: PublishBuildArtifacts@1
+    #  inputs: {pathtoPublish: 'wheelhouse'}
+    #    #condition: eq( variables['Agent.OS'], 'Linux' )
